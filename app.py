@@ -22,7 +22,15 @@ async def about(request: Request):
 
 @app.get("/contact", response_class=HTMLResponse)
 async def contact(request: Request):
-    return templates.TemplateResponse("contact.html", {"request": request})
+    return templates.TemplateResponse("contact.html", {"request": request}) 
+
+@app.get("/privacy-policy", response_class=HTMLResponse)
+def privacy_policy(request: Request):
+    return templates.TemplateResponse("privacy-policy.html", {"request": request})
+
+@app.get("/terms-of-service", response_class=HTMLResponse)
+def terms_of_service(request: Request):
+    return templates.TemplateResponse("terms-of-service.html", {"request": request})
 
 @app.post("/contact", response_class=HTMLResponse)
 async def contact_form(request: Request, name: str = Form(...), email: str = Form(...), message: str = Form(...)):
