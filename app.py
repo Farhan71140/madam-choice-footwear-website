@@ -80,6 +80,11 @@ def heels(request: Request):
 def wedges(request: Request):
     return templates.TemplateResponse("wedges.html", {"request": request})
 
+# ✅ New Bridal Route
+@app.get("/bridal", response_class=HTMLResponse)
+def bridal(request: Request):
+    return templates.TemplateResponse("bridal.html", {"request": request})
+
 # ----------------------------
 # Contact form (email)
 # ----------------------------
