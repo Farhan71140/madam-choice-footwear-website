@@ -22,6 +22,8 @@ function addToCart(productName, price, quantity = 1) {
 
   saveCart(cart);
   updateCart();
+
+  // 🔔 Feedback for customer
   alert(`${productName} ×${quantity} added to cart!`);
 }
 
@@ -33,35 +35,48 @@ function removeFromCart(index) {
   updateCart();
 }
 
-// ✅ Update cart display (used in product pages)
+// ✅ Update cart display (bottom section + modal + badge)
 function updateCart() {
   let cart = getCart();
+
+  // Bottom cart section
   const cartItems = document.getElementById("cartItems");
   const cartTotal = document.getElementById("cartTotal");
   const checkoutBtn = document.getElementById("checkoutBtn");
 
-  if (!cartItems || !cartTotal) return; // If not on cart page, skip
+  // Modal cart section
+  const modalItems = document.getElementById("cartModalItems");
+  const modalTotal = document.getElementById("cartModalTotal");
 
-  cartItems.innerHTML = "";
+  // Navbar badge
+  const cartCount = document.getElementById("cartCount");
+
   let total = 0;
+
+  if (cartItems) cartItems.innerHTML = "";
+  if (modalItems) modalItems.innerHTML = "";
 
   cart.forEach((item, index) => {
     let itemTotal = item.price * item.quantity;
     total += itemTotal;
-    cartItems.innerHTML += `
+
+    const line = `
       <li class="list-group-item d-flex justify-content-between align-items-center">
         ${item.name} × ${item.quantity} – ₹${itemTotal}
         <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">❌ Remove</button>
       </li>`;
+
+    if (cartItems) cartItems.innerHTML += line;
+    if (modalItems) modalItems.innerHTML += line;
   });
 
-  cartTotal.innerText = total;
-  if (checkoutBtn) {
-    checkoutBtn.disabled = cart.length === 0;
-  }
+  if (cartTotal) cartTotal.innerText = total;
+  if (modalTotal) modalTotal.innerText = total;
+  if (cartCount) cartCount.innerText = cart.length;
+  if (checkoutBtn) checkoutBtn.disabled = cart.length === 0;
 }
 
-// ✅ Render cart (used in cart.html)
+// ✅ Render cart on page load
 function renderCart() {
   updateCart();
 }
@@ -93,7 +108,10 @@ function confirmCartPayment() {
     return;
   }
 
-  const productList = cart.map(item => `${item.name} × ${item.quantity} (₹${item.price * item.quantity})`).join(", ");
+  const productList = cart
+    .map(item => `${item.name} × ${item.quantity} (₹${item.price * item.quantity})`)
+    .join(", ");
+
   const message = `Hello Madam Choice,\nI have paid ₹${total} for the following products:\n${productList}\nUPI Ref: ${upiRef}\nTransaction ID: ${txnId}\nPlease confirm my order.`;
 
   const encoded = encodeURIComponent(message);
@@ -106,3 +124,6 @@ function clearCart() {
   updateCart();
   alert("Cart has been cleared!");
 }
+
+// ✅ Ensure cart is rendered whenever a page loads
+document.addEventListener("DOMContentLoaded", renderCart);

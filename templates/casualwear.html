@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('products') }}" class="btn btn-outline-dark mb-3">
+  ← Back to Varieties
+</a>
+<h2 class="text-center mb-4">Casual Wear Collection</h2>
+<div class="row">
+
+  <!-- Pure Gold Soft Maroon -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/casualwear/puregoldsoftmarronC.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="Pure Gold Soft Maroon"
+         style="cursor:pointer"
+         data-bs-toggle="modal"
+         data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/casualwear/puregoldsoftmarronC.jpg') }}','Pure Gold Soft Maroon')">
+    <p class="text-dark fw-bold">₹480 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('PureGoldSoftMaroon', 480)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('PureGoldSoftMaroon', 480, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('PureGoldSoftMaroon', 480, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('PureGoldSoftMaroon', 480, 3)">+3</button>
+    </div>
+  </div>
+
+  <!-- Pink Stone Flat -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/casualwear/pinkstoneflatC.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="Pink Stone Flat"
+         style="cursor:pointer"
+         data-bs-toggle="modal"
+         data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/casualwear/pinkstoneflatC.jpg') }}','Pink Stone Flat')">
+    <p class="text-dark fw-bold">₹200 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('PinkStoneFlat', 200)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('PinkStoneFlat', 200, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('PinkStoneFlat', 200, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('PinkStoneFlat', 200, 3)">+3</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ✅ Image Preview Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="modalImage" src="" alt="" class="img-fluid modal-product-img">
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .modal-product-img {
+    max-height: 80vh;
+    width: auto;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+</style>
+
+<!-- ✅ Shared cart.js -->
+<script src="{{ url_for('static', path='/js/cart.js') }}"></script>
+<script>
+  function showImage(src, title) {
+    document.getElementById('modalImage').src = src;
+    document.getElementById('imageModalLabel').innerText = title;
+  }
+</script>
+{% endblock %}

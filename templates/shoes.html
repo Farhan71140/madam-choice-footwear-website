@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('products') }}" class="btn btn-outline-dark mb-3">
+  ← Back to Varieties
+</a>
+<h2 class="text-center mb-4">Shoes Collection</h2>
+<div class="row">
+
+  <!-- AircityAshS -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/shoes/AircityAshS.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="AircityAshS"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/shoes/AircityAshS.jpg') }}','AircityAshS')">
+    <p class="text-dark fw-bold">₹350 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('AircityAshS', 350)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('AircityAshS', 350, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('AircityAshS', 350, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('AircityAshS', 350, 3)">+3</button>
+    </div>
+  </div>
+
+  <!-- airparkgreyS -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/shoes/airparkgreyS.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="airparkgreyS"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/shoes/airparkgreyS.jpg') }}','airparkgreyS')">
+    <p class="text-dark fw-bold">₹450 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('airparkgreyS', 450)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('airparkgreyS', 450, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('airparkgreyS', 450, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('airparkgreyS', 450, 3)">+3</button>
+    </div>
+  </div>
+
+  <!-- airparkonionS -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/shoes/airparkonionS.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="airparkonionS"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/shoes/airparkonionS.jpg') }}','airparkonionS')">
+    <p class="text-dark fw-bold">₹450 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('airparkonionS', 450)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('airparkonionS', 450, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('airparkonionS', 450, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('airparkonionS', 450, 3)">+3</button>
+    </div>
+  </div>
+
+  <!-- HighmulticolourS -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/shoes/HighmulticolourS.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="HighmulticolourS"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/shoes/HighmulticolourS.jpg') }}','HighmulticolourS')">
+    <p class="text-dark fw-bold">₹500 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('HighmulticolourS', 500)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('HighmulticolourS', 500, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('HighmulticolourS', 500, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('HighmulticolourS', 500, 3)">+3</button>
+    </div>
+  </div>
+
+  <!-- kozeerustS -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/shoes/kozeerustS.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="kozeerustS"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/shoes/kozeerustS.jpg') }}','kozeerustS')">
+    <p class="text-dark fw-bold">₹420 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kozeerustS', 420)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kozeerustS', 420, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kozeerustS', 420, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kozeerustS', 420, 3)">+3</button>
+    </div>
+  </div>
+
+  <!-- steemlitepinkS -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/shoes/steemlitepinkS.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="steemlitepinkS"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/shoes/steemlitepinkS.jpg') }}','steemlitepinkS')">
+    <p class="text-dark fw-bold">₹380 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('steemlitepinkS', 380)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('steemlitepinkS', 380, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('steemlitepinkS', 380, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('steemlitepinkS', 380, 3)">+3</button>
+    </div>
+  </div>
+
+  <!-- vanshipurpleS -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/shoes/vanshipurpleS.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="vanshipurpleS"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/shoes/vanshipurpleS.jpg') }}','vanshipurpleS')">
+    <p class="text-dark fw-bold">₹650 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('vanshipurpleS', 650)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('vanshipurpleS', 650, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('vanshipurpleS', 650, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('vanshipurpleS', 650, 3)">+3</button>
+    </div>
+  </div>
+
+  <!-- wgFilsS -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/shoes/wgFilsS.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="wgFilsS"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/shoes/wgFilsS.jpg') }}','wgFilsS')">
+    <p class="text-dark fw-bold">₹600 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('wgFilsS', 600)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('wgFilsS', 600, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('wgFilsS', 600, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('wgFilsS', 600, 3)">+3</button>
+    </div>
+  </div>
+
+  <!-- YonoAshS -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/shoes/YonoAshS.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="YonoAshS"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/shoes/YonoAshS.jpg') }}','YonoAshS')">
+    <p class="text-dark fw-bold">₹350 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('YonoAshS', 350)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('YonoAshS', 350, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('YonoAshS', 350, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('YonoAshS', 350, 3)">+3</button>
+    </div>
+  </div>
+
+  <!-- YonopinkS -->
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/shoes/YonopinkS.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="YonopinkS"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/shoes/YonopinkS.jpg') }}','YonopinkS')">
+    <p class="text-dark fw-bold">₹350 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('YonopinkS', 350)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('YonopinkS', 350, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('YonopinkS', 350, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('YonopinkS', 350, 3)">+3</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Cart Section -->
+<div class="container mt-5">
+  <h3 class="fw-bold">🛒 Your Cart</h3>
+  <ul id="cartItems" class="list-group mb-3"></ul>
+  <h5>Total: ₹<span id="cartTotal">0</span></h5>
+  <button class="btn btn-primary mt-3" onclick="checkoutCart()" id="checkoutBtn" disabled>Buy Now</button>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal fade" id="paymentModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-3">
+      <h5 class="modal-title fw-bold">Complete Your Payment</h5>
+      <p>Total Amount: ₹<span id="paymentAmount"></span></p>
+      <div class="mb-3">
+        <p>Scan QR Code to Pay</p>
+        <img src="{{ url_for('static', path='/images/payment-qr.png') }}" alt="QR Code" width="200" height="200">
+      </div>
+      <div class="mb-3">
+        <label for="upiRef" class="form-label">Enter UPI Reference ID</label>
+        <input type="text" id="upiRef" class="form-control" placeholder="e.g. 1234567890">
+      </div>
+      <div class="mb-3">
+        <label for="txnId" class="form-label">Enter Transaction ID</label>
+        <input type="text" id="txnId" class="form-control" placeholder="e.g. TXN123456">
+      </div>
+      <button class="btn btn-success mt-3" onclick="confirmCartPayment()">✅ I Have Paid</button>
+    </div>
+  </div>
+</div>
+
+<!-- Image Preview Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="modalImage" src="" alt="" class="img-fluid modal-product-img">
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .modal-product-img {
+    max-height: 80vh;
+    width: auto;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+</style>
+
+<!-- Scripts -->
+<script src="{{ url_for('static', path='/js/cart.js') }}"></script>
+<script>
+  function showImage(src, title) {
+    document.getElementById('modalImage').src = src;
+    document.getElementById('imageModalLabel').innerText = title;
+  }
+</script>
+{% endblock %}

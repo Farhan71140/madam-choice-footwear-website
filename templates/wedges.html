@@ -1,61 +1,99 @@
 {% extends "base.html" %}
 {% block content %}
+<a href="{{ url_for('products') }}" class="btn btn-outline-dark mb-3">
+  ← Back to Varieties
+</a>
 <h2 class="text-center mb-4">Wedges Collection</h2>
 <div class="row">
 
   <!-- cream&blackW -->
   <div class="col-md-4 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/wedges/cream&blackW.jpg') }}" class="product-img" alt="cream&blackW">
-    <!-- ✅ Price text changed to black -->
+    <img src="{{ url_for('static', path='/images/products/wedges/cream&blackW.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="cream&blackW"
+         style="cursor:pointer"
+         data-bs-toggle="modal"
+         data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/wedges/cream&blackW.jpg') }}','cream&blackW')">
     <p class="text-dark fw-bold">₹480 <small class="text-muted">(Delivery ₹20/km)</small></p>
     <div class="d-flex justify-content-center flex-wrap">
-      <!-- ✅ Buttons changed to solid black -->
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('cream&blackW', 480)">Add to Cart</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('cream&blackW', 480, 1)">+1</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('cream&blackW', 480, 2)">+2</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('cream&blackW', 480, 3)">+3</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('cream&blackW', 480, 4)">+4</button>
-      <button class="btn btn-dark btn-sm" onclick="addToCart('cream&blackW', 480, 5)">+5</button>
+    </div>
+  </div>
+
+  <!-- BluesandalW -->
+  <div class="col-md-4 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/wedges/BluesandalW.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="BluesandalW"
+         style="cursor:pointer"
+         data-bs-toggle="modal"
+         data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/wedges/BluesandalW.jpg') }}','BluesandalW')">
+    <p class="text-dark fw-bold">₹480 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('BluesandalW', 480)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('BluesandalW', 480, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('BluesandalW', 480, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('BluesandalW', 480, 3)">+3</button>
+    </div>
+  </div>
+
+  <!-- stoneBlackW -->
+  <div class="col-md-4 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/wedges/stoneBlackW.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="stoneBlackW"
+         style="cursor:pointer"
+         data-bs-toggle="modal"
+         data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/wedges/stoneBlackW.jpg') }}','stoneBlackW')">
+    <p class="text-dark fw-bold">₹500 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('stoneBlackW', 500)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('stoneBlackW', 500, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('stoneBlackW', 500, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('stoneBlackW', 500, 3)">+3</button>
     </div>
   </div>
 
 </div>
 
-<!-- Cart Section -->
-<div class="container mt-5">
-  <h3 class="fw-bold">🛒 Your Cart</h3>
-  <ul id="cartItems" class="list-group mb-3"></ul>
-  <h5>Total: ₹<span id="cartTotal">0</span></h5>
-  <button class="btn btn-primary mt-3" onclick="checkoutCart()" id="checkoutBtn" disabled>Buy Now</button>
-</div>
-
-<!-- Payment Modal -->
-<div class="modal fade" id="paymentModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-3">
-      <h5 class="modal-title fw-bold">Complete Your Payment</h5>
-      <p>Total Amount: ₹<span id="paymentAmount"></span></p>
-
-      <div class="mb-3">
-        <p>Scan QR Code to Pay (Father’s UPI)</p>
-        <img src="{{ url_for('static', path='/images/payment-qr.png') }}" alt="QR Code" width="200" height="200">
+<!-- Image Preview Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-
-      <div class="mb-3">
-        <label for="upiRef" class="form-label">Enter UPI Reference ID</label>
-        <input type="text" id="upiRef" class="form-control" placeholder="e.g. 1234567890">
+      <div class="modal-body text-center">
+        <!-- ✅ Responsive image with max height -->
+        <img id="modalImage" src="" alt="" class="img-fluid modal-product-img">
       </div>
-
-      <div class="mb-3">
-        <label for="txnId" class="form-label">Enter Transaction ID</label>
-        <input type="text" id="txnId" class="form-control" placeholder="e.g. TXN123456">
-      </div>
-
-      <button class="btn btn-success mt-3" onclick="confirmCartPayment()">✅ I Have Paid</button>
     </div>
   </div>
 </div>
+
+<style>
+  /* ✅ Ensure modal images fit nicely on both phone and PC */
+  .modal-product-img {
+    max-height: 80vh;   /* never taller than 80% of viewport */
+    width: auto;        /* keep aspect ratio */
+    margin: 0 auto;     /* center horizontally */
+    border-radius: 8px; /* optional: rounded corners */
+  }
+</style>
 
 <!-- ✅ Link to shared cart.js -->
 <script src="{{ url_for('static', path='/js/cart.js') }}"></script>
+<script>
+  function showImage(src, title) {
+    document.getElementById('modalImage').src = src;
+    document.getElementById('imageModalLabel').innerText = title;
+  }
+</script>
 {% endblock %}

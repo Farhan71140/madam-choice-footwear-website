@@ -1,104 +1,162 @@
 {% extends "base.html" %}
 {% block content %}
+<a href="{{ url_for('products') }}" class="btn btn-outline-dark mb-3">
+  ← Back to Varieties
+</a>
 <h2 class="text-center mb-4">Bridal Collection</h2>
 <div class="row">
 
   <!-- blackAntF -->
   <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/bridal/blackAntF.jpg') }}" class="product-img" alt="blackAntF">
+    <img src="{{ url_for('static', path='/images/products/bridal/blackAntF.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="blackAntF"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/bridal/blackAntF.jpg') }}','blackAntF')">
     <p class="text-dark fw-bold">₹480 <small class="text-muted">(Delivery ₹20/km)</small></p>
-    <div class="d-flex  justify-content-center flex-wrap">
+    <div class="d-flex justify-content-center flex-wrap">
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('blackAntF', 480)">Add to Cart</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('blackAntF', 480, 1)">+1</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('blackAntF', 480, 2)">+2</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('blackAntF', 480, 3)">+3</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('blackAntF', 480, 4)">+4</button>
-      <button class="btn btn-dark btn-sm" onclick="addToCart('blackAntF', 480, 5)">+5</button>
     </div>
   </div>
 
   <!-- DolfinpeachF -->
   <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/bridal/DolfinpeachF.jpg') }}" class="product-img" alt="DolfinpeachF">
+    <img src="{{ url_for('static', path='/images/products/bridal/DolfinpeachF.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="DolfinpeachF"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/bridal/DolfinpeachF.jpg') }}','DolfinpeachF')">
     <p class="text-dark fw-bold">₹520 <small class="text-muted">(Delivery ₹20/km)</small></p>
     <div class="d-flex justify-content-center flex-wrap">
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('DolfinpeachF', 520)">Add to Cart</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('DolfinpeachF', 520, 1)">+1</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('DolfinpeachF', 520, 2)">+2</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('DolfinpeachF', 520, 3)">+3</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('DolfinpeachF', 520, 4)">+4</button>
-      <button class="btn btn-dark btn-sm" onclick="addToCart('DolfinpeachF', 520, 5)">+5</button>
     </div>
   </div>
 
   <!-- FullstoneHeavyjootiF -->
   <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/bridal/FullstoneHeavyjootiF.jpg') }}" class="product-img" alt="FullstoneHeavyjootiF">
+    <img src="{{ url_for('static', path='/images/products/bridal/FullstoneHeavyjootiF.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="FullstoneHeavyjootiF"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/bridal/FullstoneHeavyjootiF.jpg') }}','FullstoneHeavyjootiF')">
     <p class="text-dark fw-bold">₹700 <small class="text-muted">(Delivery ₹20/km)</small></p>
     <div class="d-flex justify-content-center flex-wrap">
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('FullstoneHeavyjootiF', 700)">Add to Cart</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('FullstoneHeavyjootiF', 700, 1)">+1</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('FullstoneHeavyjootiF', 700, 2)">+2</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('FullstoneHeavyjootiF', 700, 3)">+3</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('FullstoneHeavyjootiF', 700, 4)">+4</button>
-      <button class="btn btn-dark btn-sm" onclick="addToCart('FullstoneHeavyjootiF', 700, 5)">+5</button>
     </div>
   </div>
 
   <!-- HeavypeachF -->
   <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/bridal/HeavypeachF.jpg') }}" class="product-img" alt="HeavypeachF">
+    <img src="{{ url_for('static', path='/images/products/bridal/HeavypeachF.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="HeavypeachF"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/bridal/HeavypeachF.jpg') }}','HeavypeachF')">
     <p class="text-dark fw-bold">₹580 <small class="text-muted">(Delivery ₹20/km)</small></p>
     <div class="d-flex justify-content-center flex-wrap">
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('HeavypeachF', 580)">Add to Cart</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('HeavypeachF', 580, 1)">+1</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('HeavypeachF', 580, 2)">+2</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('HeavypeachF', 580, 3)">+3</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('HeavypeachF', 580, 4)">+4</button>
-      <button class="btn btn-dark btn-sm" onclick="addToCart('HeavypeachF', 580, 5)">+5</button>
     </div>
   </div>
 
   <!-- NewGoldF -->
   <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/bridal/NewGoldF.jpg') }}" class="product-img" alt="NewGoldF">
+    <img src="{{ url_for('static', path='/images/products/bridal/NewGoldF.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="NewGoldF"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/bridal/NewGoldF.jpg') }}','NewGoldF')">
     <p class="text-dark fw-bold">₹500 <small class="text-muted">(Delivery ₹20/km)</small></p>
     <div class="d-flex justify-content-center flex-wrap">
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('NewGoldF', 500)">Add to Cart</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('NewGoldF', 500, 1)">+1</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('NewGoldF', 500, 2)">+2</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('NewGoldF', 500, 3)">+3</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('NewGoldF', 500, 4)">+4</button>
-      <button class="btn btn-dark btn-sm" onclick="addToCart('NewGoldF', 500, 5)">+5</button>
     </div>
   </div>
 
   <!-- pinkHighHillF -->
   <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/bridal/pinkHighHillF.jpg') }}" class="product-img" alt="pinkHighHillF">
+    <img src="{{ url_for('static', path='/images/products/bridal/pinkHighHillF.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="pinkHighHillF"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/bridal/pinkHighHillF.jpg') }}','pinkHighHillF')">
     <p class="text-dark fw-bold">₹650 <small class="text-muted">(Delivery ₹20/km)</small></p>
     <div class="d-flex justify-content-center flex-wrap">
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('pinkHighHillF', 650)">Add to Cart</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('pinkHighHillF', 650, 1)">+1</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('pinkHighHillF', 650, 2)">+2</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('pinkHighHillF', 650, 3)">+3</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('pinkHighHillF', 650, 4)">+4</button>
-      <button class="btn btn-dark btn-sm" onclick="addToCart('pinkHighHillF', 650, 5)">+5</button>
     </div>
   </div>
 
   <!-- sargamgoldHillF -->
-<div class="col-md-3 text-center mb-4">
-  <img src="{{ url_for('static', path='/images/products/bridal/sargamgoldHillF.jpg') }}" 
-       class="product-img" alt="sargamgoldHillF">
-  <p class="text-dark fw-bold">₹480 <small class="text-muted">(Delivery ₹20/km)</small></p>
-  <div class="d-flex justify-content-center flex-wrap">
-    <button class="btn btn-dark btn-sm me-1" onclick="addToCart('sargamgoldHillF', 480)">Add to Cart</button>
-    <button class="btn btn-dark btn-sm me-1" onclick="addToCart('sargamgoldHillF', 480, 1)">+1</button>
-    <button class="btn btn-dark btn-sm me-1" onclick="addToCart('sargamgoldHillF', 480, 2)">+2</button>
-    <button class="btn btn-dark btn-sm me-1" onclick="addToCart('sargamgoldHillF', 480, 3)">+3</button>
-    <button class="btn btn-dark btn-sm me-1" onclick="addToCart('sargamgoldHillF', 480, 4)">+4</button>
-    <button class="btn btn-dark btn-sm" onclick="addToCart('sargamgoldHillF', 480, 5)">+5</button>
+  <div class="col-md-3 text-center mb-4">
+    <img src="{{ url_for('static', path='/images/products/bridal/sargamgoldHillF.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="sargamgoldHillF"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/bridal/sargamgoldHillF.jpg') }}','sargamgoldHillF')">
+    <p class="text-dark fw-bold">₹480 <small class="text-muted">(Delivery ₹20/km)</small></p>
+    <div class="d-flex justify-content-center flex-wrap">
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('sargamgoldHillF', 480)">Add to Cart</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('sargamgoldHillF', 480, 1)">+1</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('sargamgoldHillF', 480, 2)">+2</button>
+      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('sargamgoldHillF', 480, 3)">+3</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Image Preview Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="modalImage" src="" alt="" class="img-fluid modal-product-img">
+      </div>
+    </div>
   </div>
 </div>
+
+<style>
+  .modal-product-img {
+    max-height: 80vh;
+    width: auto;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+</style>
+
+<!-- Link to shared cart.js -->
+<script src="{{ url_for('static', path='/js/cart.js') }}"></script>
+<script>
+  function showImage(src, title) {
+    document.getElementById('modalImage').src = src;
+    document.getElementById('imageModalLabel').innerText = title;
+  }
+</script>
 {% endblock %}

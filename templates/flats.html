@@ -1,107 +1,111 @@
 {% extends "base.html" %}
 {% block content %}
+<a href="{{ url_for('products') }}" class="btn btn-outline-dark mb-3">
+  ← Back to Varieties
+</a>
 <h2 class="text-center mb-4">Flats Collection</h2>
 <div class="row">
 
   <!-- goldstripF -->
   <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/flats/goldstripF.jpg') }}" 
-         class="product-img" alt="goldstripF">
-    <!-- ✅ Price text changed to black -->
+    <img src="{{ url_for('static', path='/images/products/flats/goldstripF.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="goldstripF"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/flats/goldstripF.jpg') }}','goldstripF')">
     <p class="text-dark fw-bold">₹320 <small class="text-muted">(Delivery ₹20/km)</small></p>
     <div class="d-flex justify-content-center flex-wrap">
-      <!-- ✅ Buttons changed to solid black -->
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('goldstripF', 320)">Add to Cart</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('goldstripF', 320, 1)">+1</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('goldstripF', 320, 2)">+2</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('goldstripF', 320, 3)">+3</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('goldstripF', 320, 4)">+4</button>
-      <button class="btn btn-dark btn-sm" onclick="addToCart('goldstripF', 320, 5)">+5</button>
     </div>
   </div>
 
   <!-- RisecreamF -->
   <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/flats/RisecreamF.jpg') }}" 
-         class="product-img" alt="RisecreamF">
+    <img src="{{ url_for('static', path='/images/products/flats/RisecreamF.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="RisecreamF"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/flats/RisecreamF.jpg') }}','RisecreamF')">
     <p class="text-dark fw-bold">₹320 <small class="text-muted">(Delivery ₹20/km)</small></p>
     <div class="d-flex justify-content-center flex-wrap">
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamF', 320)">Add to Cart</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamF', 320, 1)">+1</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamF', 320, 2)">+2</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamF', 320, 3)">+3</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamF', 320, 4)">+4</button>
-      <button class="btn btn-dark btn-sm" onclick="addToCart('RisecreamF', 320, 5)">+5</button>
     </div>
   </div>
 
   <!-- kalwaniblackF -->
   <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/flats/kalwaniblackF.jpg') }}" 
-         class="product-img" alt="kalwaniblackF">
+    <img src="{{ url_for('static', path='/images/products/flats/kalwaniblackF.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="kalwaniblackF"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/flats/kalwaniblackF.jpg') }}','kalwaniblackF')">
     <p class="text-dark fw-bold">₹320 <small class="text-muted">(Delivery ₹20/km)</small></p>
     <div class="d-flex justify-content-center flex-wrap">
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kalwaniblackF', 320)">Add to Cart</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kalwaniblackF', 320, 1)">+1</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kalwaniblackF', 320, 2)">+2</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kalwaniblackF', 320, 3)">+3</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kalwaniblackF', 320, 4)">+4</button>
-      <button class="btn btn-dark btn-sm" onclick="addToCart('kalwaniblackF', 320, 5)">+5</button>
     </div>
   </div>
 
   <!-- RisecreamBlackF -->
   <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/flats/RisecreamBlackF.jpg') }}" 
-         class="product-img" alt="RisecreamBlackF">
+    <img src="{{ url_for('static', path='/images/products/flats/RisecreamBlackF.jpg') }}"
+         class="product-img img-thumbnail"
+         alt="RisecreamBlackF"
+         style="cursor:pointer"
+         data-bs-toggle="modal" data-bs-target="#imageModal"
+         onclick="showImage('{{ url_for('static', path='/images/products/flats/RisecreamBlackF.jpg') }}','RisecreamBlackF')">
     <p class="text-dark fw-bold">₹320 <small class="text-muted">(Delivery ₹20/km)</small></p>
     <div class="d-flex justify-content-center flex-wrap">
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamBlackF', 320)">Add to Cart</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamBlackF', 320, 1)">+1</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamBlackF', 320, 2)">+2</button>
       <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamBlackF', 320, 3)">+3</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamBlackF', 320, 4)">+4</button>
-      <button class="btn btn-dark btn-sm" onclick="addToCart('RisecreamBlackF', 320, 5)">+5</button>
     </div>
   </div>
 
 </div>
 
-<!-- Cart Section -->
-<div class="container mt-5">
-  <h3 class="fw-bold">🛒 Your Cart</h3>
-  <ul id="cartItems" class="list-group mb-3"></ul>
-  <h5>Total: ₹<span id="cartTotal">0</span></h5>
-  <button class="btn btn-primary mt-3" onclick="checkoutCart()" id="checkoutBtn" disabled>Buy Now</button>
-</div>
 
-<!-- Payment Modal -->
-<div class="modal fade" id="paymentModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-3">
-      <h5 class="modal-title fw-bold">Complete Your Payment</h5>
-      <p>Total Amount: ₹<span id="paymentAmount"></span></p>
-
-      <div class="mb-3">
-        <p>Scan QR Code to Pay (Father’s UPI)</p>
-        <img src="{{ url_for('static', path='/images/payment-qr.png') }}" alt="QR Code" width="200" height="200">
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-
-      <div class="mb-3">
-        <label for="upiRef" class="form-label">Enter UPI Reference ID</label>
-        <input type="text" id="upiRef" class="form-control" placeholder="e.g. 1234567890">
+      <div class="modal-body text-center">
+        <img id="modalImage" src="" alt="" class="img-fluid modal-product-img">
       </div>
-
-      <div class="mb-3">
-        <label for="txnId" class="form-label">Enter Transaction ID</label>
-        <input type="text" id="txnId" class="form-control" placeholder="e.g. TXN123456">
-      </div>
-
-      <button class="btn btn-success mt-3" onclick="confirmCartPayment()">✅ I Have Paid</button>
     </div>
   </div>
 </div>
+
+<style>
+  .modal-product-img {
+    max-height: 80vh;
+    width: auto;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+</style>
 
 <!-- ✅ Link to shared cart.js -->
 <script src="{{ url_for('static', path='/js/cart.js') }}"></script>
+<script>
+  function showImage(src, title) {
+    document.getElementById('modalImage').src = src;
+    document.getElementById('imageModalLabel').innerText = title;
+  }
+</script>
 {% endblock %}
