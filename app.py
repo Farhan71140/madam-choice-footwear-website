@@ -42,7 +42,7 @@ class Order(SQLModel, table=True):
 SQLModel.metadata.create_all(engine)
 
 # ----------------------------
-# Routes for static pages
+# Static page routes
 # ----------------------------
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
@@ -80,10 +80,19 @@ def heels(request: Request):
 def wedges(request: Request):
     return templates.TemplateResponse("wedges.html", {"request": request})
 
-# ✅ New Bridal Route
 @app.get("/bridal", response_class=HTMLResponse)
 def bridal(request: Request):
     return templates.TemplateResponse("bridal.html", {"request": request})
+
+@app.get("/shoes", response_class=HTMLResponse)
+def shoes(request: Request):
+    return templates.TemplateResponse("shoes.html", {"request": request})
+
+
+@app.get("/casualwear", response_class=HTMLResponse)
+async def casualwear(request: Request):
+    return templates.TemplateResponse("casualwear.html", {"request": request})
+
 
 # ----------------------------
 # Contact form (email)
@@ -122,7 +131,7 @@ async def contact_form(
     return templates.TemplateResponse("contact.html", {"request": request, "success": success})
 
 # ----------------------------
-# Customer Reviews
+# Reviews
 # ----------------------------
 @app.post("/reviews")
 async def add_review(name: str = Form(...), rating: int = Form(...), text: str = Form(...)):
@@ -140,7 +149,7 @@ async def list_reviews():
         return reviews
 
 # ----------------------------
-# Orders & Payment (basic flow)
+# Orders
 # ----------------------------
 @app.post("/orders")
 async def create_order(
@@ -168,3 +177,28 @@ async def get_order(order_id: str):
         if not order:
             raise HTTPException(status_code=404, detail="Order not found")
         return order
+
+# ----------------------------
+# Coupon route (Form-based)
+# ----------------------------
+@app.post("/apply-coupon")
+async def apply_coupon(
+    total_amount: float = Form(...),
+    coupon: str = Form(...)
+):
+    coupon = coupon.strip().lower()
+    discount = 0
+    if coupon == "madamchoice10":
+        if total_amount >= 900:
+            discount = 0.10
+        elif total_amount >= 500:
+            discount = 0.08
+        else:
+            discount = 0.05
+
+    discounted_total = round(total_amount - (total_amount * discount), 2)
+    return {
+        "original_total": total_amount,
+        "discount_percent": int(discount * 100),
+        "discounted_total": discounted_total
+    }

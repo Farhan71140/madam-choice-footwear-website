@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-5">
+
+  <!-- 🔙 Bold Home Arrow -->
+  <a href="/" class="btn btn-outline-dark mb-3 home-arrow">←</a>
+
   <h2 class="fw-bold text-center mb-4">Our Products</h2>
   <p class="text-center text-muted">Explore our wide variety of ladies footwear</p>
 
@@ -66,5 +70,25 @@
            alt="Jooti Cover" class="product-cover">
     </a>
   </div>
+
+<!-- Casualwear -->
+<div class="mb-5 text-center">
+  <h3>Casualwear</h3>
+  <a href="/casualwear">
+    <img src="{{ url_for('static', path='/images/products/casualwear/cover.jpg') }}" 
+         alt="Casualwear Cover" class="product-cover">
+  </a>
 </div>
+
+</div>
+
+<!-- ✅ Arrow Styling -->
+<style>
+  .home-arrow {
+    font-size: 1.5rem;   /* bigger arrow */
+    font-weight: bold;   /* thicker arrow */
+    padding: 4px 10px;   /* spacing */
+    border-radius: 50%;  /* optional: circular button */
+  }
+</style>
 {% endblock %}
