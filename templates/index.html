@@ -1,23 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="text-center">
+
+<!-- 🔹 Hero Section with Homepage Image -->
+<section class="hero" style="background: url('{{ url_for('static', path='images/homepage-hero.jpg') }}') no-repeat center center; background-size: cover; height: 100vh;">
+  <div class="d-flex flex-column justify-content-center align-items-center h-100 text-white text-center" style="background: rgba(0,0,0,0.4);">
+    <h1 class="fw-bold display-4">Madam Choice Footwear</h1>
+    <p class="lead">Heels, Flats, Wedges, Jootis, Shoes & Flip-Flops</p>
+    <a href="/products" class="btn btn-light btn-lg mt-3">👠 Shop Now</a>
+    <a href="https://wa.me/919133028638?text=Hello%20Madam%20Choice%20Footwear%2C%20I%20want%20to%20order" class="btn btn-success btn-lg mt-3">💬 Order on WhatsApp</a>
+  </div>
+</section>
+
+<!-- 🔹 Welcome Section -->
+<div class="text-center mt-5">
   <h1 class="fw-bold">Welcome to Madam Choice Footwear</h1>
 
-  <!-- 🔹 Tagline and Manager Credit -->
+  <!-- Tagline and Manager Credit -->
   <p class="lead">The Perfect Combination – All Kinds Of Fancy Chappal & Sandals</p>
   <p class="text-muted">Website owned & managed by <strong>Md. Siraj Uddin</strong></p>
 
-  <!-- 🔹 Shop Intro -->
+  <!-- Shop Intro -->
   <p>Serving Secunderabad with stylish ladies footwear since <strong>2005</strong>.</p>
   <p>From daily wear to fancy collections, we bring variety and quality under one roof.</p>
   <p>Visit us at <strong># B-13, Palika Bazar, Station Road, Secunderabad – 500 003</strong></p>
 
-  <!-- 🔹 Action Buttons -->
+  <!-- Action Buttons -->
   <a href="/products" class="btn btn-primary btn-lg mt-3">Explore Products</a>
   <a href="tel:9133028638" class="btn btn-success btn-lg mt-3">📞 Call Now</a>
   <a href="mailto:farhanuddin0516@gmail.com" class="btn btn-outline-info btn-lg mt-3">✉️ Email Us</a>
 
-  <!-- 🔹 Instagram Follow -->
+  <!-- Instagram Follow -->
   <div style="margin-top: 40px;">
     <h4 class="fw-bold mb-3">Follow Us On</h4>
     <a href="https://www.instagram.com/madamchoice_footwear?igsh=MXJ1aXEwejgzZWxwOA==" target="_blank" style="margin: 0 15px;">
@@ -29,11 +41,9 @@
 <!-- 🔹 Delivery Section -->
 <div class="container mt-5">
   <h2 class="text-center fw-bold mb-4">Delivery Information</h2>
-
   <div class="mb-4">
     <h4 class="fw-semibold">🚚 Delivery</h4>
-    <p>Your order will be delivered within <strong>3 days</strong> of confirmation. We ensure fast and safe delivery across Secunderabad and Hyderbad
-      .</p>
+    <p>Your order will be delivered within <strong>3 days</strong> of confirmation. We ensure fast and safe delivery across Secunderabad and Hyderabad.</p>
   </div>
 </div>
 
@@ -58,7 +68,6 @@
   </form>
 </div>
 
-
 <!-- ✅ Payment Confirmation Script -->
 <script>
 function confirmPayment(productName, price) {
@@ -72,4 +81,5 @@ function confirmPayment(productName, price) {
   }
 }
 </script>
+
 {% endblock %}
