@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
 
-  /* 🔥 Moving Gradient Background */
+  /* 🔥 Moving Gradient Background (site-wide) */
   background: linear-gradient(-45deg, #0d6efd, #198754, #23a6d5, #6610f2);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
@@ -52,7 +52,7 @@ body {
   transform: scale(1.05);
 }
 
-/* Buttons */
+/* Buttons (global) */
 .btn-success {
   background-color: #198754;
   border: none;
@@ -70,4 +70,99 @@ footer a {
 }
 footer a:hover {
   text-decoration: underline;
+}
+
+/* === Homepage Hero (Premium, Vibrant, Glossy) === */
+.hero {
+  position: relative;
+  color: #fff;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed; /* subtle parallax */
+  min-height: 85vh;
+  display: block;
+}
+
+/* Glossy overlay for legibility and premium feel */
+.hero .overlay {
+  background: rgba(0, 20, 40, 0.45); /* deep blue-tinted glass */
+  padding: 40px 28px;
+  border-radius: 16px;
+  backdrop-filter: saturate(160%) blur(6px); /* glossy effect */
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.55);
+}
+
+.hero p.lead {
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-shadow: 0 4px 14px rgba(0,0,0,0.45);
+  margin-top: 8px;
+}
+
+/* Premium CTA buttons aligned to blue-black palette */
+.hero .btn {
+  border: none;
+  border-radius: 32px;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  box-shadow: 0 8px 24px rgba(13, 110, 253, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  margin: 6px 8px;
+}
+
+/* Primary CTA (Shop Now) */
+.hero .btn-light {
+  background: linear-gradient(90deg, #00B2FF, #0d6efd);
+  color: #fff;
+}
+.hero .btn-light:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(13, 110, 253, 0.35);
+}
+
+/* WhatsApp CTA */
+.hero .btn-success {
+  background: linear-gradient(90deg, #00D67A, #198754);
+  color: #fff;
+}
+.hero .btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(25, 135, 84, 0.35);
+}
+
+/* Optional: section spacing below hero */
+.section-spacer {
+  margin-top: 3rem;
+}
+
+/* Optional: apply animated gradient only to non-hero sections (use .page-bg wrapper) */
+.page-bg {
+  background: linear-gradient(-45deg, #0d6efd, #198754, #23a6d5, #6610f2);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+/* Responsive tweaks for hero */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 70vh;
+    background-attachment: scroll; /* improve mobile performance */
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  .hero p.lead {
+    font-size: 1.05rem;
+  }
+  .hero .overlay {
+    padding: 28px 20px;
+  }
 }
