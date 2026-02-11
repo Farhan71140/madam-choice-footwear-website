@@ -4,165 +4,108 @@ body {
   margin: 0;
   padding: 0;
 
-  /* 🔥 Moving Gradient Background (site-wide) */
-  background: linear-gradient(-45deg, #0d6efd, #198754, #23a6d5, #6610f2);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
+  /* 🌤 Vibrant Sky Blue Glossy Background */
+  background: linear-gradient(135deg, #87CEEB, #00BFFF, #1E90FF);
+  background-size: 200% 200%;
+  animation: glossyBG 12s ease infinite;
 }
 
-/* Gradient Animation Keyframes */
-@keyframes gradientBG {
+/* Glossy Animation Keyframes */
+@keyframes glossyBG {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
 /* Navbar */
-.navbar-brand img {
-  margin-right: 8px;
-}
-.nav-link.active {
-  color: #0d6efd !important;
-  font-weight: bold;
-}
+.navbar-brand img { margin-right: 8px; }
+.nav-link.active { color: #0d6efd !important; font-weight: bold; }
 
 /* Product Cover Images */
 .product-cover {
-  width: 100%;
-  max-width: 400px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 8px;
+  width: 100%; max-width: 400px; height: 250px;
+  object-fit: cover; border-radius: 8px;
   transition: transform 0.3s ease;
 }
-.product-cover:hover {
-  transform: scale(1.05);
-}
+.product-cover:hover { transform: scale(1.05); }
 
-/* ✅ Product Images (inside category pages like heels, flats, wedges) */
+/* Product Images */
 .product-img {
-  width: 250px;
-  height: 250px;
-  object-fit: cover;   /* ensures all images fit nicely */
-  border-radius: 8px;
-  margin-bottom: 10px;
-  transition: transform 0.3s ease;
+  width: 250px; height: 250px;
+  object-fit: cover; border-radius: 8px;
+  margin-bottom: 10px; transition: transform 0.3s ease;
 }
-.product-img:hover {
-  transform: scale(1.05);
-}
+.product-img:hover { transform: scale(1.05); }
 
-/* Buttons (global) */
-.btn-success {
-  background-color: #198754;
-  border: none;
+/* Buttons */
+.btn-success { background-color: #198754; border: none; }
+.btn-success:hover { background-color: #157347; }
+
+/* 🔹 Darker Email Us Button */
+.btn-outline-info {
+  color: #fff;                  /* white text */
+  background-color: #004080;    /* dark navy blue background */
+  border: 2px solid #002244;    /* darker border */
 }
-.btn-success:hover {
-  background-color: #157347;
+.btn-outline-info:hover {
+  color: #fff;
+  background-color: #002244;    /* even darker on hover */
+  border-color: #001122;
 }
 
 /* Footer */
-footer {
-  font-size: 14px;
-}
-footer a {
-  color: #0dcaf0;
-}
-footer a:hover {
-  text-decoration: underline;
+footer { font-size: 14px; }
+footer a { color: #0dcaf0; }
+footer a:hover { text-decoration: underline; }
+
+/* === Hero Gradient Section === */
+.hero-gradient {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #87CEEB, #00BFFF, #1E90FF); /* same blue gradient */
+  background-size: 200% 200%;
+  animation: glossyBG 12s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* === Homepage Hero (Premium, Vibrant, Glossy) === */
-.hero {
-  position: relative;
-  color: #fff;
-  background-position: center;
+/* Overlay Content */
+.hero-content {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.7); /* light semi-transparent box */
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.hero-content h1,
+.hero-content p,
+.hero-content h4 {
+  color: #000; /* 🔹 Dark black text */
+  text-shadow: none;
+}
+
+.hero-content .btn {
+  margin: 5px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* === Section Backgrounds (Delivery, Reviews) === */
+.sky-section {
+  background: linear-gradient(135deg, #87CEEB, #00BFFF, #1E90FF); /* same blue gradient */
   background-size: cover;
-  background-attachment: fixed; /* subtle parallax */
-  min-height: 85vh;
-  display: block;
+  padding: 40px 20px;
+  border-radius: 12px;
 }
 
-/* Glossy overlay for legibility and premium feel */
-.hero .overlay {
-  background: rgba(0, 20, 40, 0.45); /* deep blue-tinted glass */
-  padding: 40px 28px;
-  border-radius: 16px;
-  backdrop-filter: saturate(160%) blur(6px); /* glossy effect */
-  max-width: 960px;
-  margin: 0 auto;
+.sky-section h2, .sky-section h4, .sky-section p {
+  color: #000; /* 🔹 Dark black text */
 }
 
-.hero h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  text-shadow: 0 6px 18px rgba(0,0,0,0.55);
-}
-
-.hero p.lead {
-  font-size: 1.25rem;
-  font-weight: 500;
-  text-shadow: 0 4px 14px rgba(0,0,0,0.45);
-  margin-top: 8px;
-}
-
-/* Premium CTA buttons aligned to blue-black palette */
-.hero .btn {
-  border: none;
-  border-radius: 32px;
-  padding: 12px 28px;
-  font-size: 1.1rem;
-  box-shadow: 0 8px 24px rgba(13, 110, 253, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-  margin: 6px 8px;
-}
-
-/* Primary CTA (Shop Now) */
-.hero .btn-light {
-  background: linear-gradient(90deg, #00B2FF, #0d6efd);
-  color: #fff;
-}
-.hero .btn-light:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(13, 110, 253, 0.35);
-}
-
-/* WhatsApp CTA */
-.hero .btn-success {
-  background: linear-gradient(90deg, #00D67A, #198754);
-  color: #fff;
-}
-.hero .btn-success:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(25, 135, 84, 0.35);
-}
-
-/* Optional: section spacing below hero */
-.section-spacer {
-  margin-top: 3rem;
-}
-
-/* Optional: apply animated gradient only to non-hero sections (use .page-bg wrapper) */
-.page-bg {
-  background: linear-gradient(-45deg, #0d6efd, #198754, #23a6d5, #6610f2);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-}
-
-/* Responsive tweaks for hero */
+/* Responsive */
 @media (max-width: 768px) {
-  .hero {
-    min-height: 70vh;
-    background-attachment: scroll; /* improve mobile performance */
-  }
-  .hero h1 {
-    font-size: 2.2rem;
-  }
-  .hero p.lead {
-    font-size: 1.05rem;
-  }
-  .hero .overlay {
-    padding: 28px 20px;
-  }
+  .hero-gradient { height: 100vh; }
+  .hero-content { padding: 20px; }
+  .hero-content h1 { font-size: 1.6rem; }
+  .hero-content p { font-size: 1rem; }
 }
