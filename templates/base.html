@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Madam Choice Footwear – Secunderabad</title>
   <link rel="icon" href="{{ url_for('static', path='/images/logo.png') }}">
+  <!-- ✅ Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- ✅ Custom CSS -->
   <link href="{{ url_for('static', path='/css/style.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -29,7 +31,7 @@
           <li class="nav-item"><a class="nav-link {% if request.url.path == '/about' %}active{% endif %}" href="/about">About</a></li>
           <li class="nav-item"><a class="nav-link {% if request.url.path == '/contact' %}active{% endif %}" href="/contact">Contact</a></li>
 
-          <!-- ✅ Cart option in navbar (opens modal) -->
+          <!-- ✅ Cart option in navbar -->
           <li class="nav-item">
             <button class="btn btn-outline-light position-relative ms-2" data-bs-toggle="modal" data-bs-target="#cartModal">
               🛒 Cart
@@ -43,8 +45,8 @@
     </div>
   </nav>
 
-  <!-- ✅ Main Content -->
-  <main class="container my-5">
+  <!-- ✅ Main Content (fullscreen hero allowed) -->
+  <main>
     {% block content %}{% endblock %}
   </main>
 
@@ -94,64 +96,57 @@
     </div>
   </footer>
 
- <!-- ✅ Cart Modal -->
-<div class="modal fade" id="cartModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header justify-content-between">
-        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
-          ← Back to Shopping
-        </button>
-        <h5 class="modal-title fw-bold text-center flex-grow-1">🛒 Your Cart</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body text-center p-3">
-        <ul id="cartModalItems" class="list-group mb-3"></ul>
-        <h5>Total: ₹<span id="cartModalTotal">0</span></h5>
-        <button class="btn btn-primary mt-3" onclick="checkoutCart()">Buy Now</button>
+  <!-- ✅ Cart Modal -->
+  <div class="modal fade" id="cartModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header justify-content-between">
+          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">← Back to Shopping</button>
+          <h5 class="modal-title fw-bold text-center flex-grow-1">🛒 Your Cart</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center p-3">
+          <ul id="cartModalItems" class="list-group mb-3"></ul>
+          <h5>Total: ₹<span id="cartModalTotal">0</span></h5>
+          <button class="btn btn-primary mt-3" onclick="checkoutCart()">Buy Now</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
- <!-- ✅ Payment Modal -->
-<div class="modal fade" id="paymentModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header justify-content-between">
-        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
-          ← Back to Cart
-        </button>
-        <h5 class="modal-title fw-bold text-center flex-grow-1">Complete Your Payment</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body text-center p-3">
-        <p>Total Amount: ₹<span id="paymentAmount"></span></p>
-
-        <div class="mb-3">
-          <p>Scan QR Code to Pay</p>
-          <img src="{{ url_for('static', path='/images/payment-qr.png') }}" alt="QR Code" width="200" height="200">
+  <!-- ✅ Payment Modal -->
+  <div class="modal fade" id="paymentModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header justify-content-between">
+          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">← Back to Cart</button>
+          <h5 class="modal-title fw-bold text-center flex-grow-1">Complete Your Payment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
+        <div class="modal-body text-center p-3">
+          <p>Total Amount: ₹<span id="paymentAmount"></span></p>
 
-        <div class="mb-3">
-          <label for="upiRef" class="form-label">Enter UPI Reference ID</label>
-          <input type="text" id="upiRef" class="form-control" placeholder="e.g. 1234567890">
+          <div class="mb-3">
+            <p>Scan QR Code to Pay</p>
+            <img src="{{ url_for('static', path='/images/payment-qr.png') }}" alt="QR Code" width="200" height="200">
+          </div>
+
+          <div class="mb-3">
+            <label for="upiRef" class="form-label">Enter UPI Reference ID</label>
+            <input type="text" id="upiRef" class="form-control" placeholder="e.g. 1234567890">
+          </div>
+
+          <div class="mb-3">
+            <label for="txnId" class="form-label">Enter Transaction ID</label>
+            <input type="text" id="txnId" class="form-control" placeholder="e.g. TXN123456">
+          </div>
+
+          <button class="btn btn-success mt-3" onclick="confirmCartPayment()">✅ I Have Paid</button>
         </div>
-
-        <div class="mb-3">
-          <label for="txnId" class="form-label">Enter Transaction ID</label>
-          <input type="text" id="txnId" class="form-control" placeholder="e.g. TXN123456">
-        </div>
-
-        <button class="btn btn-success mt-3" onclick="confirmCartPayment()">✅ I Have Paid</button>
       </div>
     </div>
   </div>
-</div>
 
   <!-- ✅ Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- ✅ Custom JS -->
-  <script src="{{ url_for('static', path='/js/cart.js') }}"></script>
-</body>
-</html>
+  <!-- ✅ Custom
