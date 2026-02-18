@@ -35,7 +35,13 @@ templates = Jinja2Templates(directory="templates")
 # ----------------------------
 # Database setup
 # ----------------------------
-engine = create_engine("sqlite:///database.db", echo=False)
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://postgres:Farhan002@12@db.orsswaxevumwdzqkeopc.supabase.co:5432/postgres"
+)
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+engine = create_engine(DATABASE_URL, echo=False)
 
 class Review(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
