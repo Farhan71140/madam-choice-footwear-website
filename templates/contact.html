@@ -1,32 +1,442 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Contact Us</h2>
 
-<p><strong>Call us:</strong> 📞 9133028638 / 9395550002</p>
-<p><strong>Email us:</strong> ✉️ 
-  <a href="mailto:farhanuddin0516@gmail.com">farhanuddin0516@gmail.com</a>
-</p>
-<p><strong>Visit us:</strong> # B-13, Palika Bazar, Station Road, Secunderabad – 500 003</p>
+<style>
+  /* ===== CONTACT PAGE STYLING ===== */
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-{% if success %}
-<div class="alert alert-success">Thank you! Your message has been received.</div>
-{% endif %}
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(3deg); }
+  }
 
-<form method="POST" action="/contact">
-  <div class="mb-3">
-    <label>Name</label>
-    <input type="text" name="name" class="form-control" required>
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  /* Contact Section Container */
+  .contact-section {
+    background: #00c6ff;
+    min-height: 100vh;
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Floating bubbles decoration */
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    top: -150px;
+    right: -150px;
+    animation: float 8s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  .contact-section::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    bottom: -100px;
+    left: -100px;
+    animation: float 6s ease-in-out infinite reverse;
+    z-index: 0;
+  }
+
+  /* Content container */
+  .contact-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Main heading */
+  .contact-heading {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #000;
+    text-align: center;
+    margin-bottom: 3rem;
+    text-shadow: 2px 4px 8px rgba(255,255,255,0.3);
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  /* Success Alert */
+  .alert-success-custom {
+    background: linear-gradient(135deg, #00c851 0%, #007E33 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 25px rgba(0, 200, 81, 0.3);
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .alert-success-custom strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+  }
+
+  /* Contact Info Cards Grid */
+  .contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+  }
+
+  .contact-info-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 114, 255, 0.2);
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .contact-info-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 50px rgba(0, 114, 255, 0.3);
+  }
+
+  .contact-info-card:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .contact-info-card:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  .contact-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: inline-block;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .contact-info-card h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 15px;
+  }
+
+  .contact-info-card p {
+    font-size: 1.1rem;
+    color: #2d3748;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .contact-info-card a {
+    color: #0072ff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .contact-info-card a:hover {
+    color: #004080;
+    text-decoration: underline;
+  }
+
+  /* Contact Form Card */
+  .contact-form-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 114, 255, 0.2);
+    animation: fadeInUp 0.8s ease-out 0.6s backwards;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .contact-form-card h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  /* Form styling */
+  .form-group {
+    margin-bottom: 25px;
+  }
+
+  .form-label-contact {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .form-control-contact {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+  }
+
+  .form-control-contact:focus {
+    border-color: #0072ff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 114, 255, 0.1);
+    transform: scale(1.01);
+  }
+
+  textarea.form-control-contact {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+  /* Button styles */
+  .btn-submit-contact {
+    background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 64, 128, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px;
+    text-decoration: none;
+  }
+
+  .btn-submit-contact:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 30px rgba(0, 64, 128, 0.6);
+    background: linear-gradient(135deg, #002244 0%, #004080 100%);
+    color: white;
+  }
+
+  .btn-whatsapp-contact {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+  }
+
+  .btn-whatsapp-contact:hover {
+    background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+    color: white;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  /* Map or additional info section */
+  .additional-info {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 40px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 114, 255, 0.2);
+    animation: fadeInUp 0.8s ease-out 0.8s backwards;
+  }
+
+  .additional-info h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 15px;
+  }
+
+  .additional-info p {
+    font-size: 1.1rem;
+    color: #2d3748;
+    line-height: 1.8;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .contact-heading {
+      font-size: 2rem;
+    }
+
+    .contact-info-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-form-card {
+      padding: 25px;
+    }
+
+    .btn-submit-contact {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .button-group {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<div class="contact-section">
+  <div class="container contact-container">
+    
+    <h2 class="contact-heading">Contact Us</h2>
+
+    <!-- Contact Info Cards -->
+    <div class="contact-info-grid">
+      
+      <!-- Phone Card -->
+      <div class="contact-info-card">
+        <div class="contact-icon">📞</div>
+        <h4>Call Us</h4>
+        <p>
+          <a href="tel:9133028638">9133028638</a> / 
+          <a href="tel:9395550002">9395550002</a>
+        </p>
+      </div>
+
+      <!-- Email Card -->
+      <div class="contact-info-card">
+        <div class="contact-icon">✉️</div>
+        <h4>Email Us</h4>
+        <p>
+          <a href="mailto:farhanuddin0516@gmail.com">farhanuddin0516@gmail.com</a>
+        </p>
+      </div>
+
+      <!-- Location Card -->
+      <div class="contact-info-card">
+        <div class="contact-icon">📍</div>
+        <h4>Visit Us</h4>
+        <p># B-13, Palika Bazar, Station Road,<br>Secunderabad – 500 003</p>
+      </div>
+
+    </div>
+
+    <!-- Success Message -->
+    {% if success %}
+    <div class="alert-success-custom">
+      <strong>✅ Success!</strong> Thank you! Your message has been received.
+    </div>
+    {% endif %}
+
+    <!-- Contact Form -->
+    <div class="contact-form-card">
+      <h3>Send Us a Message</h3>
+      <form method="POST" action="/contact">
+        
+        <div class="form-group">
+          <label for="name" class="form-label-contact">📝 Name</label>
+          <input type="text" name="name" id="name" class="form-control-contact" placeholder="Enter your name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label-contact">📧 Email</label>
+          <input type="email" name="email" id="email" class="form-control-contact" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="message" class="form-label-contact">💬 Message</label>
+          <textarea name="message" id="message" class="form-control-contact" placeholder="Write your message here..." required></textarea>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="btn-submit-contact">
+            <span>📤</span> Send
+          </button>
+          <button type="button" class="btn-submit-contact" onclick="emailDirectly()">
+            <span>✉️</span> Email directly
+          </button>
+          <button type="button" class="btn-submit-contact btn-whatsapp-contact" onclick="sendWhatsApp()">
+            <span>💬</span> WhatsApp
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Additional Info -->
+    <div class="additional-info">
+      <h4>🕒 Business Hours</h4>
+      <p><strong>Open Daily:</strong> 10:00 AM - 9:00 PM<br>
+      Visit our store for a personalized shopping experience!</p>
+    </div>
+
   </div>
-  <div class="mb-3">
-    <label>Email</label>
-    <input type="email" name="email" class="form-control" required>
-  </div>
-  <div class="mb-3">
-    <label>Message</label>
-    <textarea name="message" class="form-control" required></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary">Send</button>
-  <a href="mailto:farhanuddin0516@gmail.com" class="btn btn-outline-info ms-2">✉️ Email directly</a>
-  <a href="https://wa.me/919133028638" class="btn btn-success ms-2">💬 WhatsApp</a>
-</form>
+</div>
+
+<script>
+// Email directly function
+function emailDirectly() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+  
+  if (!name || !email || !message) {
+    alert('Please fill in all fields before sending email.');
+    return;
+  }
+  
+  const subject = encodeURIComponent(`Contact from ${name}`);
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+  
+  window.location.href = `mailto:farhanuddin0516@gmail.com?subject=${subject}&body=${body}`;
+}
+
+// WhatsApp function
+function sendWhatsApp() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+  
+  if (!name || !email || !message) {
+    alert('Please fill in all fields before sending via WhatsApp.');
+    return;
+  }
+  
+  const whatsappMessage = `Hello Madam Choice Footwear,\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+  const encoded = encodeURIComponent(whatsappMessage);
+  
+  window.open(`https://wa.me/919133028638?text=${encoded}`, '_blank');
+}
+</script>
+
 {% endblock %}

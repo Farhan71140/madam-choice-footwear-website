@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Form, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 import smtplib
@@ -7,6 +7,22 @@ from email.message import EmailMessage
 from sqlmodel import SQLModel, Field, Session, create_engine, select
 from datetime import datetime
 import uuid
+import os
+
+from passlib.context import CryptContext
+from dotenv import load_dotenv
+load_dotenv()  # ✅ Loads secrets from .env file
+
+# -------------------------------
+# Password hashing setup
+# -------------------------------
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def hash_password(password: str) -> str:
+    return pwd_context.hash(password)
+
+def verify_password(password: str, hashed: str) -> bool:
+    return pwd_context.verify(password, hashed)
 
 # ----------------------------
 # App setup
@@ -35,9 +51,19 @@ class Order(SQLModel, table=True):
     expected_amount: int
     customer_name: str
     customer_phone: str
-    status: str = Field(default="pending")  # pending, paid, failed
+    customer_address: str = Field(default="")   # ✅ NEW
+    payment_method: str = Field(default="UPI")  # ✅ NEW
+    transaction_id: str = Field(default="")     # ✅ NEW
+    status: str = Field(default="pending")      # pending, paid, failed
     created_at: datetime = Field(default_factory=datetime.utcnow)
     paid_at: datetime | None = None
+
+class User(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str
+    email: str = Field(index=True, unique=True)
+    password_hash: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)
 
 SQLModel.metadata.create_all(engine)
 
@@ -88,11 +114,43 @@ def bridal(request: Request):
 def shoes(request: Request):
     return templates.TemplateResponse("shoes.html", {"request": request})
 
-
 @app.get("/casualwear", response_class=HTMLResponse)
 async def casualwear(request: Request):
     return templates.TemplateResponse("casualwear.html", {"request": request})
 
+# ----------------------------
+# ✅ Payment page route (NEW)
+# ----------------------------
+@app.get("/pay", response_class=HTMLResponse)
+async def pay_page(request: Request):
+    return templates.TemplateResponse("pay.html", {"request": request})
+
+# ----------------------------
+# ✅ Save order to DB after UPI payment (NEW)
+# Called from pay.html JS after user submits verification form
+# ----------------------------
+@app.post("/api/save-order")
+async def save_order(request: Request):
+    try:
+        data = await request.json()
+        with Session(engine) as session:
+            order = Order(
+                product_name=data.get("orderItems", "Multiple Items"),
+                expected_amount=int(float(data.get("amount", 0))),
+                customer_name=data.get("name", ""),
+                customer_phone=data.get("phone", ""),
+                customer_address=data.get("address", ""),
+                payment_method=data.get("paymentMethod", "UPI"),
+                transaction_id=data.get("transactionId", ""),
+                status="pending"  # You manually verify & update to "paid"
+            )
+            session.add(order)
+            session.commit()
+            session.refresh(order)
+            return JSONResponse({"ok": True, "order_id": order.order_id})
+    except Exception as e:
+        print("Save order error:", e)
+        return JSONResponse({"ok": False, "error": str(e)}, status_code=500)
 
 # ----------------------------
 # Contact form (email)
@@ -104,13 +162,14 @@ async def contact_form(
     email: str = Form(...),
     message: str = Form(...)
 ):
-    gmail_user = "farhanuddin0516@gmail.com"
-    gmail_app_password = "replace_with_app_password"
+    # ✅ Read from .env — never hardcode passwords
+    gmail_user = os.getenv("GMAIL_USER", "farhanuddin0516@gmail.com")
+    gmail_app_password = os.getenv("GMAIL_APP_PASSWORD", "")
 
     msg = EmailMessage()
     msg["Subject"] = "New Contact Form Submission - Madam Choice"
     msg["From"] = gmail_user
-    msg["To"] = "farhanuddin0516@gmail.com"
+    msg["To"] = gmail_user
     msg.set_content(
         f"New message from Madam Choice Contact Form:\n\n"
         f"Name: {name}\n"
@@ -149,7 +208,7 @@ async def list_reviews():
         return reviews
 
 # ----------------------------
-# Orders
+# Orders (existing form-based route kept for compatibility)
 # ----------------------------
 @app.post("/orders")
 async def create_order(
@@ -179,7 +238,7 @@ async def get_order(order_id: str):
         return order
 
 # ----------------------------
-# Coupon route (Form-based)
+# Coupon route
 # ----------------------------
 @app.post("/apply-coupon")
 async def apply_coupon(
@@ -202,3 +261,33 @@ async def apply_coupon(
         "discount_percent": int(discount * 100),
         "discounted_total": discounted_total
     }
+
+# ----------------------------
+# Signup & Login
+# ----------------------------
+@app.get("/signup", response_class=HTMLResponse)
+def signup_page(request: Request):
+    return templates.TemplateResponse("signup.html", {"request": request})
+
+@app.post("/signup", response_class=HTMLResponse)
+def signup(request: Request, name: str = Form(...), email: str = Form(...), password: str = Form(...)):
+    with Session(engine) as session:
+        existing = session.exec(select(User).where(User.email == email)).first()
+        if existing:
+            return templates.TemplateResponse("signup.html", {"request": request, "error": "Email already registered!"})
+        user = User(name=name, email=email, password_hash=hash_password(password))
+        session.add(user)
+        session.commit()
+        return templates.TemplateResponse("signup.html", {"request": request, "success": f"Account created for {name}. You can now log in."})
+
+@app.get("/login", response_class=HTMLResponse)
+def login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+@app.post("/login", response_class=HTMLResponse)
+def login(request: Request, email: str = Form(...), password: str = Form(...)):
+    with Session(engine) as session:
+        user = session.exec(select(User).where(User.email == email)).first()
+        if not user or not verify_password(password, user.password_hash):
+            return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid credentials"})
+        return templates.TemplateResponse("login.html", {"request": request, "success": f"Welcome back, {user.name}!"})

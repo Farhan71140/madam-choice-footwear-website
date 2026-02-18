@@ -1,70 +1,585 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- 🔹 Hero Gradient Section -->
-<div class="hero-gradient">
-  <div class="hero-content">
-    <h1 class="fw-bold">Welcome to Madam Choice Footwear</h1>
-    <p class="lead">The Perfect Combination – All Kinds Of Fancy Chappal & Sandals</p>
-    <p>Website owned & managed by <strong>Md. Siraj Uddin</strong></p>
-    <p>Serving Secunderabad with stylish ladies footwear since <strong>2005</strong>.</p>
-    <p>Visit us at <strong># B-13, Palika Bazar, Station Road, Secunderabad – 500 003</strong></p>
+<style>
+  /* ===== MODERN DESIGN SYSTEM WITH OCEAN BLUE ===== */
+  :root {
+    --primary-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    --accent-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    --success-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    --dark-blue-gradient: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+    --light-blue-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    --light-bg: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    --card-shadow: 0 10px 40px rgba(0, 114, 255, 0.2);
+    --hover-shadow: 0 15px 50px rgba(0, 114, 255, 0.3);
+  }
 
-    <!-- Action Buttons -->
-    <div class="mt-3">
-      <a href="/products" class="btn btn-primary btn-lg mx-2">Explore Products</a>
-      <a href="tel:9133028638" class="btn btn-success btn-lg mx-2">📞 Call Now</a>
-      <!-- ✅ Dark Email Us Button -->
-       <a href="https://mail.google.com/mail/?view=cm&fs=1&to=farhanuddin0516@gmail.com" 
-   target="_blank" 
-   class="btn btn-outline-info btn-lg mx-2">
-   ✉️ Email Us
-</a>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO SECTION ===== */
+  .hero-modern {
+    background: #00c6ff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 0;
+  }
+
+  .hero-modern::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    top: -200px;
+    right: -200px;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .hero-modern::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    bottom: -150px;
+    left: -150px;
+    animation: float 6s ease-in-out infinite reverse;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(5deg); }
+  }
+
+  .hero-content-modern {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 4px 8px rgba(255,255,255,0.3);
+    animation: fadeInUp 1s ease-out;
+    color: #000;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    opacity: 0.95;
+    animation: fadeInUp 1s ease-out 0.2s backwards;
+    color: #1a1a1a;
+  }
+
+  .hero-details {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease-out 0.4s backwards;
+    color: #1a1a1a;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .badge-modern {
+    display: inline-block;
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin: 5px;
+    font-weight: 600;
+    border: 2px solid rgba(255,255,255,0.5);
+    animation: pulse 2s ease-in-out infinite;
+    color: #1a1a1a;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  /* ===== BUTTON STYLES - DARK BLUE ===== */
+  .btn-action-modern {
+    background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+    border: none;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    margin: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 64, 128, 0.5);
+  }
+
+  .btn-action-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .btn-action-modern:hover::before {
+    left: 100%;
+  }
+
+  .btn-action-modern:hover {
+    transform: translateY(-3px) scale(1.05);
+    color: white;
+    box-shadow: 0 8px 30px rgba(0, 64, 128, 0.7);
+    background: linear-gradient(135deg, #002244 0%, #004080 100%);
+  }
+
+  /* ===== SOCIAL SECTION ===== */
+  .social-section {
+    margin-top: 3rem;
+    animation: fadeInUp 1s ease-out 0.6s backwards;
+  }
+
+  .social-section h4 {
+    color: #1a1a1a;
+  }
+
+  .social-link {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+    border-radius: 50%;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+
+  .social-link:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(255,255,255,0.3);
+  }
+
+  /* ===== SECTION STYLES ===== */
+  .section-modern {
+    padding: 80px 0;
+    background: #00c6ff;
+    position: relative;
+  }
+
+  .section-white {
+    background: #00c6ff;
+    position: relative;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #000;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-subtitle {
+    font-size: 1.2rem;
+    color: #000;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== CARD STYLES ===== */
+  .card-modern {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+    height: 100%;
+    background-clip: padding-box;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-modern:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--hover-shadow);
+    border-image: linear-gradient(135deg, #00c6ff, #0072ff, #00c6ff, #0072ff) 1;
+  }
+
+  .card-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .card-modern h4 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #000;
+  }
+
+  .card-modern p {
+    color: #000;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  /* ===== INFO BOXES ===== */
+  .info-box {
+    background: rgba(255, 255, 255, 0.9);
+    border-left: 4px solid #fff;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .info-box h5 {
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 10px;
+  }
+
+  .info-box p {
+    margin: 0;
+    color: #000;
+    line-height: 1.8;
+  }
+
+  /* ===== REVIEW FORM ===== */
+  .review-form {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: var(--card-shadow);
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .form-control-modern {
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .form-control-modern:focus {
+    border-color: #0072ff;
+    box-shadow: 0 0 0 3px rgba(0, 114, 255, 0.2);
+    outline: none;
+  }
+
+  .form-label-modern {
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+  }
+
+  .form-check-inline {
+    margin-right: 15px;
+  }
+
+  .form-check-label {
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+
+  .btn-submit {
+    background: var(--dark-blue-gradient);
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 64, 128, 0.4);
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 64, 128, 0.6);
+  }
+
+  /* ===== FEATURES GRID ===== */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .feature-item {
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+  }
+
+  .feature-item:nth-child(1) {
+    border-color: #00c6ff;
+  }
+
+  .feature-item:nth-child(2) {
+    border-color: #0072ff;
+  }
+
+  .feature-item:nth-child(3) {
+    border-color: #00c6ff;
+  }
+
+  .feature-item:nth-child(4) {
+    border-color: #0072ff;
+  }
+
+  .feature-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--card-shadow);
+  }
+
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .feature-item h5 {
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000;
+  }
+
+  .feature-item p {
+    color: #000;
+    margin: 0;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+    }
+
+    .btn-action-modern {
+      padding: 12px 25px;
+      font-size: 1rem;
+      margin: 8px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .card-modern {
+      padding: 25px;
+    }
+  }
+
+  /* ===== DECORATIVE ELEMENTS ===== */
+  .wave-divider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .wave-divider svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 60px;
+  }
+
+  .wave-divider .shape-fill {
+    fill: #ffffff;
+  }
+</style>
+
+<!-- ===== HERO SECTION ===== -->
+<div class="hero-modern">
+  <div class="container">
+    <div class="hero-content-modern">
+      <h1 class="hero-title">Madam Choice Footwear</h1>
+      <p class="hero-subtitle">Your Trusted Destination for Elegant Ladies Footwear</p>
       
-    </div>
+      <div class="hero-details">
+        <span class="badge-modern">👞 Fancy Footwear </span>
+        <span class="badge-modern">⭐ Since 2005</span>
+        <span class="badge-modern">🚚 Fast Delivery</span>
+      </div>
 
-    <!-- Instagram Follow -->
-    <div class="mt-4">
-      <h4 class="fw-bold mb-3">Follow Us On</h4>
-      <a href="https://www.instagram.com/madamchoice_footwear?igsh=MXJ1aXEwejgzZWxwOA==" target="_blank" style="margin: 0 15px;">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="40" height="40">
-      </a>
+      <p class="hero-details mt-3">
+        Proudly managed by <strong>Md. Siraj Uddin</strong><br>
+        📍 # B-13, Palika Bazar, Station Road, Secunderabad – 500003
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="mt-4">
+        <a href="/products" class="btn-action-modern">
+          <span>🛍️</span> Explore Products
+        </a>
+        <a href="tel:9133028638" class="btn-action-modern">
+          <span>📞</span> Call Now
+        </a>
+        <a href="https://wa.me/919133028638" target="_blank" class="btn-action-modern">
+          <span>💬</span> WhatsApp Us
+        </a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=farhanuddin0516@gmail.com" target="_blank" class="btn-action-modern">
+          <span>✉️</span> Email Us
+        </a>
+      </div>
+
+      <!-- Social Section -->
+      <div class="social-section">
+        <h4 class="mb-3">Follow Our Journey</h4>
+        <a href="https://www.instagram.com/madamchoice_footwear?igsh=MXJ1aXEwejgzZWxwOA==" target="_blank" class="social-link">
+          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="40" height="40">
+        </a>
+      </div>
     </div>
+  </div>
+
+  <!-- Wave Divider -->
+  <div class="wave-divider">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+    </svg>
   </div>
 </div>
 
+<!-- ===== WHY CHOOSE US SECTION ===== -->
+<section class="section-modern">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title">Why Choose Madam Choice?</h2>
+      <p class="section-subtitle">Experience excellence in every step</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">🎨</div>
+        <h5>Trendy Designs</h5>
+        <p>Latest fashion-forward styles that complement every outfit</p>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-icon">💎</div>
+        <h5>Premium Quality</h5>
+        <p>Carefully curated footwear that ensures comfort and durability</p>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-icon">💰</div>
+        <h5>Best Prices</h5>
+        <p>Affordable luxury without compromising on quality</p>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-icon">🤝</div>
+        <h5>Trusted Since 2005</h5>
+        <p>19+ years of serving Secunderabad with excellence</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 🔹 Delivery Section -->
-<section class="container mt-5 sky-section">
-  <h2 class="text-center fw-bold mb-4">Delivery Information</h2>
-  <div class="mb-4">
-    <h4 class="fw-semibold">🚚 Delivery</h4>
-    <p>Your order will be delivered within <strong>3 days</strong> of confirmation. We ensure fast and safe delivery across Secunderabad and Hyderabad.</p>
+<section class="section-modern section-white">
+  <div class="container">
+    <h2 class="text-center section-title mb-4">Delivery Information</h2>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="info-box">
+          <h5>🚚 Delivery</h5>
+          <p>Your order will be delivered within <strong>3 days</strong> of confirmation. We ensure fast and safe delivery across Secunderabad and Hyderabad.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- 🔹 Customer Reviews -->
-<section class="container mt-5 sky-section">
-  <h2 class="text-center fw-bold mb-4">Customer Reviews</h2>
-  <form>
-    <div class="mb-3">
-      <label for="reviewText" class="form-label">📝 Your Review</label>
-      <textarea class="form-control" id="reviewText" rows="3" placeholder="Share your experience..."></textarea>
+<section class="section-modern">
+  <div class="container">
+    <h2 class="text-center section-title mb-4">Customer Reviews</h2>
+    <div class="review-form">
+      <form id="reviewForm">
+        <div class="mb-3">
+          <label for="reviewText" class="form-label-modern">📝 Your Review</label>
+          <textarea class="form-control form-control-modern" id="reviewText" rows="3" placeholder="Share your experience..." required></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label-modern">⭐ Rating</label><br>
+          {% for i in range(1,6) %}
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="rating" id="star{{ i }}" value="{{ i }}" required>
+            <label class="form-check-label" for="star{{ i }}">{{ '★' * i + '☆' * (5 - i) }}</label>
+          </div>
+          {% endfor %}
+        </div>
+        <button type="submit" class="btn-submit">Submit Review</button>
+      </form>
     </div>
-    <div class="mb-3">
-      <label class="form-label">⭐ Rating</label><br>
-      {% for i in range(1,6) %}
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="rating" id="star{{ i }}" value="{{ i }}">
-        <label class="form-check-label" for="star{{ i }}">{{ '★' * i + '☆' * (5 - i) }}</label>
-      </div>
-      {% endfor %}
-    </div>
-    <button type="submit" class="btn btn-primary">Submit Review</button>
-  </form>
+  </div>
 </section>
 
-<!-- ✅ Payment Confirmation Script -->
+<!-- ===== SCRIPTS ===== -->
 <script>
+// ✅ Payment Confirmation Script
 function confirmPayment(productName, price) {
   const paid = confirm(`Have you paid ₹${price} for ${productName}?`);
   if (paid) {
@@ -75,6 +590,51 @@ function confirmPayment(productName, price) {
     alert("Please complete the payment before proceeding.");
   }
 }
+
+// ✅ Review Form Submission
+document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const reviewText = document.getElementById('reviewText').value;
+  const rating = document.querySelector('input[name="rating"]:checked')?.value;
+  
+  if (reviewText && rating) {
+    const stars = '⭐'.repeat(rating);
+    const message = `New Customer Review for Madam Choice Footwear\n\nRating: ${stars} (${rating}/5)\n\nReview: ${reviewText}\n\nThank you for your feedback!`;
+    const encoded = encodeURIComponent(message);
+    
+    // Send to WhatsApp
+    window.open(`https://wa.me/919133028638?text=${encoded}`, '_blank');
+    
+    // Show success message
+    alert('Thank you for your review! We appreciate your feedback. 🌟');
+    
+    // Reset form
+    this.reset();
+  }
+});
+
+// Add animation on scroll
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.card-modern, .feature-item, .info-box').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'all 0.6s ease-out';
+  observer.observe(el);
+});
 </script>
 
 {% endblock %}
