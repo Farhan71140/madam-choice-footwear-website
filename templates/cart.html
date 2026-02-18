@@ -1,141 +1,492 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Madam Choice - Cart</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container py-4">
+{% extends "base.html" %}
+{% block content %}
 
-  <!-- Cart Section -->
-  <div id="cartSection">
-    <h2 class="mb-4">Your Cart</h2>
+<style>
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-    <div id="cartItems" class="mb-3">
-      <p>PureGoldSoftMaroon × 1 – ₹480</p>
-      <p>PinkStoneFlat × 1 – ₹200</p>
-      <p>airparkgreyS × 1 – ₹450</p>
-      <p>airparkonionS × 1 – ₹450</p>
-      <p>vanshipurpleS × 2 – ₹1300</p>
+  .cart-section {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8f0fe 100%);
+    min-height: 100vh;
+    padding: 60px 0;
+  }
+
+  .cart-container {
+    max-width: 750px;
+    margin: 0 auto;
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .cart-heading {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a237e;
+    margin-bottom: 8px;
+  }
+
+  .cart-subheading {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+  }
+
+  /* Cart Items Card */
+  .cart-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 12px;
+  }
+
+  .cart-item:last-child { border-bottom: none; }
+
+  .item-info { flex: 1; }
+
+  .item-title {
+    font-weight: 700;
+    color: #111;
+    font-size: 1rem;
+    margin-bottom: 2px;
+  }
+
+  .item-meta { font-size: 0.85rem; color: #888; }
+
+  .item-qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .qty-btn {
+    width: 30px; height: 30px;
+    border: 2px solid #e0e0e0;
+    border-radius: 50%;
+    background: white;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    color: #1a237e;
+  }
+
+  .qty-btn:hover { border-color: #1a237e; background: #e8f0fe; }
+
+  .qty-num {
+    font-weight: 700;
+    font-size: 1rem;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .item-price {
+    font-weight: 700;
+    color: #1a237e;
+    font-size: 1rem;
+    min-width: 70px;
+    text-align: right;
+  }
+
+  .remove-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s;
+    line-height: 1;
+  }
+
+  .remove-btn:hover { color: #e53935; }
+
+  /* Empty cart */
+  .empty-cart {
+    text-align: center;
+    padding: 50px 20px;
+    color: #999;
+  }
+
+  .empty-cart .empty-icon { font-size: 4rem; margin-bottom: 16px; }
+  .empty-cart p { font-size: 1.1rem; margin-bottom: 20px; }
+
+  .btn-shop {
+    background: linear-gradient(135deg, #1a237e, #0072ff);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+  }
+
+  .btn-shop:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,114,255,0.4);
+    color: white;
+  }
+
+  /* Coupon Card */
+  .coupon-card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px 30px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+
+  .coupon-card h6 {
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 14px;
+    font-size: 1rem;
+  }
+
+  .coupon-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .coupon-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+    outline: none;
+    text-transform: uppercase;
+  }
+
+  .coupon-input:focus { border-color: #0072ff; }
+
+  .btn-coupon {
+    padding: 12px 22px;
+    background: linear-gradient(135deg, #ff6b00, #e65100);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-coupon:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,107,0,0.4); }
+
+  .coupon-msg {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: none;
+  }
+
+  .coupon-msg.success { color: #2e7d32; display: block; }
+  .coupon-msg.error   { color: #c62828; display: block; }
+
+  /* Summary Card */
+  .summary-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 30px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 12px;
+  }
+
+  .summary-row.discount { color: #2e7d32; font-weight: 600; }
+
+  .summary-divider {
+    border: none;
+    border-top: 2px solid #f0f0f0;
+    margin: 16px 0;
+  }
+
+  .summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a237e;
+  }
+
+  /* Checkout Button */
+  .btn-checkout {
+    width: 100%;
+    margin-top: 20px;
+    padding: 18px;
+    background: linear-gradient(135deg, #1a237e 0%, #0072ff 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(0,114,255,0.35);
+    text-decoration: none;
+  }
+
+  .btn-checkout:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,114,255,0.5);
+    color: white;
+  }
+
+  .btn-checkout:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .secure-badge {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: #999;
+  }
+
+  @media (max-width: 576px) {
+    .cart-card, .coupon-card, .summary-card { padding: 20px 16px; }
+    .coupon-row { flex-direction: column; }
+    .btn-coupon { width: 100%; }
+  }
+</style>
+
+<div class="cart-section">
+  <div class="container cart-container">
+
+    <h2 class="cart-heading">🛒 Your Cart</h2>
+    <p class="cart-subheading">Review your items before checkout</p>
+
+    <!-- Cart Items -->
+    <div class="cart-card">
+      <div id="cartItemsList"></div>
     </div>
 
-    <p class="fw-bold">Total: <span id="cartTotalDisplay">₹2880.00</span></p>
+    <!-- Coupon (hidden when cart empty) -->
+    <div class="coupon-card" id="couponSection" style="display:none;">
+      <h6>🎟️ Have a Coupon Code?</h6>
+      <div class="coupon-row">
+        <input type="text" id="couponInput" class="coupon-input" placeholder="e.g. MADAMCHOICE10">
+        <button class="btn-coupon" onclick="applyCoupon()">Apply</button>
+      </div>
+      <p id="couponMsg" class="coupon-msg"></p>
+    </div>
 
-    <!-- Buy Now Button -->
-    <button class="btn btn-primary" onclick="showPayment()">Buy Now</button>
+    <!-- Order Summary (hidden when cart empty) -->
+    <div class="summary-card" id="summarySection" style="display:none;">
+
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span>₹<span id="subtotalDisplay">0</span></span>
+      </div>
+      <div class="summary-row discount" id="discountRow" style="display:none;">
+        <span>Discount (<span id="discountPct"></span>% off)</span>
+        <span>− ₹<span id="discountAmt"></span></span>
+      </div>
+      <div class="summary-row">
+        <span>Delivery</span>
+        <span style="color: #2e7d32; font-weight: 600;">FREE</span>
+      </div>
+
+      <hr class="summary-divider">
+
+      <div class="summary-total">
+        <span>Total</span>
+        <span>₹<span id="totalDisplay">0</span></span>
+      </div>
+
+      <!-- Proceed to Pay Button -->
+      <a href="/pay" class="btn-checkout" id="checkoutBtn">
+        💳 Proceed to Pay
+      </a>
+
+      <p class="secure-badge">🔒 Secure UPI payment · Order confirmed via WhatsApp</p>
+    </div>
+
   </div>
+</div>
 
-  <!-- Payment Section (hidden initially) -->
-  <div id="paymentSection" class="d-none">
-    <div class="d-flex align-items-center justify-content-between mb-3">
-      <h5 class="fw-bold mb-0">Complete Your Payment</h5>
-      <button class="btn btn-outline-secondary btn-sm" onclick="showCart()">← Back to Cart</button>
-    </div>
+<script>
+  // ─────────────────────────────────────────
+  // State
+  // ─────────────────────────────────────────
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  let discountPercent = 0;
+  let discountedTotal = 0;
 
-    <p class="mb-3">
-      Original Amount: ₹<span id="originalAmount" style="text-decoration: line-through; color: red;"></span><br>
-      <span class="fw-bold">Payable Amount: ₹<span id="paymentAmount"></span></span>
-    </p>
+  // ─────────────────────────────────────────
+  // Render cart
+  // ─────────────────────────────────────────
+  function renderCart() {
+    cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const list = document.getElementById('cartItemsList');
+    const couponSection  = document.getElementById('couponSection');
+    const summarySection = document.getElementById('summarySection');
 
-    <div class="mb-3">
-      <label for="coupon" class="form-label">Apply Coupon</label>
-      <input type="text" id="coupon" class="form-control" placeholder="Enter coupon code e.g. madamchoice10">
-      <button class="btn btn-primary mt-2" onclick="applyCoupon()">Apply Coupon</button>
-      <p id="discountInfo" class="mt-2 fw-bold"></p>
-    </div>
-
-    <div class="mb-3">
-      <p>Scan QR Code to Pay (Father’s UPI)</p>
-      <img src="{{ url_for('static', path='/images/payment-qr.png') }}" alt="QR Code" width="200" height="200">
-    </div>
-
-    <div class="mb-3">
-      <label for="upiRef" class="form-label">Enter UPI Reference ID</label>
-      <input type="text" id="upiRef" class="form-control" placeholder="e.g. 1234567890">
-    </div>
-
-    <div class="mb-3">
-      <label for="txnId" class="form-label">Enter Transaction ID</label>
-      <input type="text" id="txnId" class="form-control" placeholder="e.g. TXN123456">
-    </div>
-
-    <button class="btn btn-success mt-3" onclick="confirmCartPayment()">✅ I Have Paid</button>
-  </div>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    let cartTotal = 2880; // Example total
-
-    // Show payment section, hide cart
-    function showPayment() {
-      document.getElementById('cartSection').classList.add('d-none');
-      document.getElementById('paymentSection').classList.remove('d-none');
-
-      // Set payable amount
-      document.getElementById('paymentAmount').innerText = cartTotal.toFixed(2);
-      document.getElementById('originalAmount').innerText = '';
-      document.getElementById('discountInfo').innerText = '';
+    if (cart.length === 0) {
+      list.innerHTML = `
+        <div class="empty-cart">
+          <div class="empty-icon">🛍️</div>
+          <p>Your cart is empty!</p>
+          <a href="/products" class="btn-shop">Shop Now →</a>
+        </div>`;
+      couponSection.style.display  = 'none';
+      summarySection.style.display = 'none';
+      return;
     }
 
-    // Back to cart
-    function showCart() {
-      document.getElementById('paymentSection').classList.add('d-none');
-      document.getElementById('cartSection').classList.remove('d-none');
+    // Show coupon + summary
+    couponSection.style.display  = 'block';
+    summarySection.style.display = 'block';
+
+    let html = '';
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      html += `
+        <div class="cart-item">
+          <div class="item-info">
+            <div class="item-title">${item.name}</div>
+            <div class="item-meta">₹${item.price.toFixed(2)} each</div>
+          </div>
+          <div class="item-qty-controls">
+            <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+            <span class="qty-num">${item.quantity}</span>
+            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+          </div>
+          <div class="item-price">₹${itemTotal.toFixed(2)}</div>
+          <button class="remove-btn" onclick="removeItem(${index})" title="Remove">✕</button>
+        </div>`;
+    });
+
+    list.innerHTML = html;
+    updateSummary();
+  }
+
+  // ─────────────────────────────────────────
+  // Update summary totals
+  // ─────────────────────────────────────────
+  function updateSummary() {
+    const subtotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+    discountedTotal = subtotal;
+
+    if (discountPercent > 0) {
+      const saving = subtotal * (discountPercent / 100);
+      discountedTotal = subtotal - saving;
+
+      document.getElementById('discountRow').style.display = 'flex';
+      document.getElementById('discountPct').innerText  = discountPercent;
+      document.getElementById('discountAmt').innerText  = saving.toFixed(2);
+    } else {
+      document.getElementById('discountRow').style.display = 'none';
     }
 
-    // Apply coupon
-    async function applyCoupon() {
-      const totalText = document.getElementById('paymentAmount').innerText;
-      const totalAmount = parseFloat(totalText.replace('₹', '').trim());
-      const coupon = document.getElementById('coupon').value.trim();
-      const discountInfoEl = document.getElementById('discountInfo');
+    document.getElementById('subtotalDisplay').innerText = subtotal.toFixed(2);
+    document.getElementById('totalDisplay').innerText    = discountedTotal.toFixed(2);
 
-      if (isNaN(totalAmount) || !coupon) {
-        discountInfoEl.innerText = 'Missing total or coupon.';
-        discountInfoEl.classList.add('text-danger');
-        return;
+    // Save final total to localStorage so pay.html can read it
+    localStorage.setItem('cartTotal', discountedTotal.toFixed(2));
+  }
+
+  // ─────────────────────────────────────────
+  // Quantity controls
+  // ─────────────────────────────────────────
+  function changeQty(index, delta) {
+    cart[index].quantity += delta;
+    if (cart[index].quantity <= 0) {
+      cart.splice(index, 1);
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    discountPercent = 0; // Reset discount when cart changes
+    renderCart();
+    // Reset coupon UI
+    document.getElementById('couponMsg').className = 'coupon-msg';
+    document.getElementById('couponMsg').innerText = '';
+    document.getElementById('couponInput').value = '';
+  }
+
+  function removeItem(index) {
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    discountPercent = 0;
+    renderCart();
+  }
+
+  // ─────────────────────────────────────────
+  // Apply coupon
+  // ─────────────────────────────────────────
+  async function applyCoupon() {
+    const coupon  = document.getElementById('couponInput').value.trim();
+    const msgEl   = document.getElementById('couponMsg');
+    const subtotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+
+    if (!coupon) {
+      msgEl.className = 'coupon-msg error';
+      msgEl.innerText = 'Please enter a coupon code.';
+      return;
+    }
+
+    const formData = new URLSearchParams();
+    formData.append('total_amount', subtotal);
+    formData.append('coupon', coupon);
+
+    try {
+      const res    = await fetch('/apply-coupon', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData
+      });
+      const result = await res.json();
+
+      if (result.discount_percent > 0) {
+        discountPercent = result.discount_percent;
+        updateSummary();
+        const saved = (subtotal - result.discounted_total).toFixed(2);
+        msgEl.className = 'coupon-msg success';
+        msgEl.innerText = `✅ ${result.discount_percent}% off applied! You saved ₹${saved}`;
+      } else {
+        discountPercent = 0;
+        updateSummary();
+        msgEl.className = 'coupon-msg error';
+        msgEl.innerText = '❌ Invalid coupon code. Try MADAMCHOICE10';
       }
-
-      const formData = new URLSearchParams();
-      formData.append('total_amount', totalAmount);
-      formData.append('coupon', coupon);
-
-      try {
-        const response = await fetch('/apply-coupon', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: formData
-        });
-
-        if (!response.ok) {
-          discountInfoEl.innerText = 'Coupon failed.';
-          discountInfoEl.classList.add('text-danger');
-          return;
-        }
-
-        const result = await response.json();
-        if (result.discount_percent > 0) {
-          document.getElementById('originalAmount').innerText = totalAmount.toFixed(2);
-          document.getElementById('paymentAmount').innerText = result.discounted_total.toFixed(2);
-          discountInfoEl.innerText = `Coupon Applied: ${result.discount_percent}% off. You saved ₹${(totalAmount - result.discounted_total).toFixed(2)}!`;
-          discountInfoEl.classList.remove('text-danger');
-          discountInfoEl.classList.add('text-success');
-        } else {
-          discountInfoEl.innerText = 'Invalid coupon code.';
-          discountInfoEl.classList.remove('text-success');
-          discountInfoEl.classList.add('text-danger');
-        }
-      } catch (e) {
-        discountInfoEl.innerText = 'Coupon failed.';
-        discountInfoEl.classList.add('text-danger');
-      }
+    } catch (e) {
+      msgEl.className = 'coupon-msg error';
+      msgEl.innerText = 'Could not apply coupon. Please try again.';
     }
+  }
 
-    // Confirm payment
-    function confirmCartPayment() {
-      alert('Payment confirmed. Thank you!');
-    }
-  </script>
-</body>
-</html>
+  // ─────────────────────────────────────────
+  // Init
+  // ─────────────────────────────────────────
+  renderCart();
+</script>
+
+{% endblock %}

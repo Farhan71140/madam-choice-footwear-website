@@ -4,13 +4,13 @@ body {
   margin: 0;
   padding: 0;
 
-  /* 🌤 Vibrant Sky Blue Glossy Background */
-  background: linear-gradient(135deg, #87CEEB, #00BFFF, #1E90FF);
+  /* 🌊 Ocean Gradient Background */
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
   background-size: 200% 200%;
   animation: glossyBG 12s ease infinite;
 }
 
-/* Glossy Animation Keyframes */
+/* Ocean Gradient Animation */
 @keyframes glossyBG {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -37,20 +37,40 @@ body {
 }
 .product-img:hover { transform: scale(1.05); }
 
-/* Buttons */
-.btn-success { background-color: #198754; border: none; }
-.btn-success:hover { background-color: #157347; }
-
-/* 🔹 Darker Email Us Button */
-.btn-outline-info {
-  color: #fff;                  /* white text */
-  background-color: #004080;    /* dark navy blue background */
-  border: 2px solid #002244;    /* darker border */
-}
-.btn-outline-info:hover {
+/* === Unified Action Buttons with Glow === */
+.btn-action {
   color: #fff;
-  background-color: #002244;    /* even darker on hover */
-  border-color: #001122;
+  background: linear-gradient(135deg, #004080, #0066cc); /* glossy dark blue */
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-action:hover {
+  transform: scale(1.08);
+  background: linear-gradient(135deg, #002244, #004080); /* darker on hover */
+}
+
+/* Shine effect on buttons */
+.btn-action::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 10%, transparent 40%);
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* Footer */
@@ -62,20 +82,19 @@ footer a:hover { text-decoration: underline; }
 .hero-gradient {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(135deg, #87CEEB, #00BFFF, #1E90FF); /* same blue gradient */
-  background-size: 200% 200%;
-  animation: glossyBG 12s ease infinite;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Overlay Content */
+/* Overlay Content with Glass Effect */
 .hero-content {
   text-align: center;
-  background: rgba(255, 255, 255, 0.7); /* light semi-transparent box */
-  padding: 30px;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.25); /* frosted glass */
+  backdrop-filter: blur(12px);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(0, 191, 255, 0.6); /* glow */
 }
 
 .hero-content h1,
@@ -87,19 +106,84 @@ footer a:hover { text-decoration: underline; }
 
 .hero-content .btn {
   margin: 5px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 
 /* === Section Backgrounds (Delivery, Reviews) === */
 .sky-section {
-  background: linear-gradient(135deg, #87CEEB, #00BFFF, #1E90FF); /* same blue gradient */
-  background-size: cover;
+  background: rgba(255, 255, 255, 0.25); /* frosted glass style */
+  backdrop-filter: blur(8px);
   padding: 40px 20px;
   border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.sky-section:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
 }
 
 .sky-section h2, .sky-section h4, .sky-section p {
   color: #000; /* 🔹 Dark black text */
+}
+
+/* === Login / Signup Pages === */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-box {
+  background: rgba(255, 255, 255, 0.25); /* frosted glass */
+  backdrop-filter: blur(12px);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(0, 191, 255, 0.6);
+  width: 350px;
+  text-align: center;
+}
+
+.auth-box h2 {
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.auth-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.auth-box .btn-auth {
+  width: 100%;
+  margin-top: 15px;
+  color: #fff;
+  background: linear-gradient(135deg, #004080, #0066cc);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.auth-box .btn-auth:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #002244, #004080);
+}
+
+.auth-box p {
+  margin-top: 15px;
+  color: #000;
+}
+.auth-box a {
+  color: #0d6efd;
+  text-decoration: none;
+}
+.auth-box a:hover {
+  text-decoration: underline;
 }
 
 /* Responsive */

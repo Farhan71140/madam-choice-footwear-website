@@ -1,104 +1,343 @@
 {% extends "base.html" %}
 {% block content %}
-<a href="{{ url_for('products') }}" class="btn btn-outline-dark mb-3">
-  ← Back to Varieties
-</a>
-<h2 class="text-center mb-4">Flats Collection</h2>
-<div class="row">
 
-  <!-- goldstripF -->
-  <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/flats/goldstripF.jpg') }}"
-         class="product-img img-thumbnail"
-         alt="goldstripF"
-         style="cursor:pointer"
-         data-bs-toggle="modal" data-bs-target="#imageModal"
-         onclick="showImage('{{ url_for('static', path='/images/products/flats/goldstripF.jpg') }}','goldstripF')">
-    <p class="text-dark fw-bold">₹320 <small class="text-muted">(Delivery ₹20/km)</small></p>
-    <div class="d-flex justify-content-center flex-wrap">
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('goldstripF', 320)">Add to Cart</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('goldstripF', 320, 1)">+1</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('goldstripF', 320, 2)">+2</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('goldstripF', 320, 3)">+3</button>
+<style>
+  /* ===== PRODUCT PAGE STYLING ===== */
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(3deg); }
+  }
+
+  /* Product Section Container */
+  .product-section {
+    background: #00c6ff;
+    min-height: 100vh;
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Floating bubbles decoration */
+  .product-section::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    top: -150px;
+    right: -150px;
+    animation: float 8s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  .product-section::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    bottom: -100px;
+    left: -100px;
+    animation: float 6s ease-in-out infinite reverse;
+    z-index: 0;
+  }
+
+  /* Content container */
+  .product-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Back button */
+  .btn-back {
+    background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 64, 128, 0.3);
+  }
+
+  .btn-back:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 64, 128, 0.5);
+    color: white;
+  }
+
+  /* Page heading */
+  .product-heading {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #000;
+    text-align: center;
+    margin-bottom: 3rem;
+    text-shadow: 2px 4px 8px rgba(255,255,255,0.3);
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  /* Product Grid */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+  }
+
+  /* Product Card */
+  .product-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 114, 255, 0.2);
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+  }
+
+  .product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 50px rgba(0, 114, 255, 0.3);
+  }
+
+  /* Product Image */
+  .product-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+  }
+
+  .product-img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Price */
+  .product-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000;
+    margin: 15px 0 10px 0;
+  }
+
+  .delivery-info {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+  }
+
+  /* Buttons */
+  .btn-add-cart {
+    background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 3px;
+    box-shadow: 0 3px 15px rgba(0, 64, 128, 0.3);
+  }
+
+  .btn-add-cart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 64, 128, 0.5);
+    background: linear-gradient(135deg, #002244 0%, #004080 100%);
+  }
+
+  .btn-quantity {
+    background: rgba(0, 64, 128, 0.8);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 3px;
+  }
+
+  .btn-quantity:hover {
+    background: rgba(0, 64, 128, 1);
+    transform: scale(1.1);
+  }
+
+  /* Button container */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  /* Modal styling */
+  .modal-content {
+    border-radius: 20px;
+    border: none;
+    overflow: hidden;
+  }
+
+  .modal-header {
+    background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+    color: white;
+    border: none;
+  }
+
+  .modal-product-img {
+    max-height: 80vh;
+    width: auto;
+    margin: 0 auto;
+    border-radius: 15px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .product-heading {
+      font-size: 2rem;
+    }
+
+    .product-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .product-img {
+      height: 200px;
+    }
+  }
+</style>
+
+<div class="product-section">
+  <div class="container product-container">
+    
+    <!-- Back Button -->
+    <a href="{{ url_for('products') }}" class="btn-back">
+      ← Back to Varieties
+    </a>
+
+    <!-- Page Heading -->
+    <h2 class="product-heading">Flats Collection</h2>
+
+    <!-- Product Grid -->
+    <div class="product-grid">
+
+      <!-- goldstripF -->
+      <div class="product-card">
+        <img src="{{ url_for('static', path='/images/products/flats/goldstripF.jpg') }}"
+             class="product-img"
+             alt="goldstripF"
+             data-bs-toggle="modal"
+             data-bs-target="#imageModal"
+             onclick="showImage('{{ url_for('static', path='/images/products/flats/goldstripF.jpg') }}','goldstripF')">
+        <div class="product-price">₹320</div>
+        <div class="delivery-info">(Delivery ₹20/km)</div>
+        <div class="button-container">
+          <button class="btn-add-cart" onclick="addToCart('goldstripF', 320)">Add to Cart</button>
+          <button class="btn-quantity" onclick="addToCart('goldstripF', 320, 1)">+1</button>
+          <button class="btn-quantity" onclick="addToCart('goldstripF', 320, 2)">+2</button>
+        </div>
+      </div>
+
+      <!-- RisecreamF -->
+      <div class="product-card">
+        <img src="{{ url_for('static', path='/images/products/flats/RisecreamF.jpg') }}"
+             class="product-img"
+             alt="RisecreamF"
+             data-bs-toggle="modal"
+             data-bs-target="#imageModal"
+             onclick="showImage('{{ url_for('static', path='/images/products/flats/RisecreamF.jpg') }}','RisecreamF')">
+        <div class="product-price">₹320</div>
+        <div class="delivery-info">(Delivery ₹20/km)</div>
+        <div class="button-container">
+          <button class="btn-add-cart" onclick="addToCart('RisecreamF', 320)">Add to Cart</button>
+          <button class="btn-quantity" onclick="addToCart('RisecreamF', 320, 1)">+1</button>
+          <button class="btn-quantity" onclick="addToCart('RisecreamF', 320, 2)">+2</button>
+        </div>
+      </div>
+
+      <!-- kalwaniblackF -->
+      <div class="product-card">
+        <img src="{{ url_for('static', path='/images/products/flats/kalwaniblackF.jpg') }}"
+             class="product-img"
+             alt="kalwaniblackF"
+             data-bs-toggle="modal"
+             data-bs-target="#imageModal"
+             onclick="showImage('{{ url_for('static', path='/images/products/flats/kalwaniblackF.jpg') }}','kalwaniblackF')">
+        <div class="product-price">₹320</div>
+        <div class="delivery-info">(Delivery ₹20/km)</div>
+        <div class="button-container">
+          <button class="btn-add-cart" onclick="addToCart('kalwaniblackF', 320)">Add to Cart</button>
+          <button class="btn-quantity" onclick="addToCart('kalwaniblackF', 320, 1)">+1</button>
+          <button class="btn-quantity" onclick="addToCart('kalwaniblackF', 320, 2)">+2</button>
+        </div>
+      </div>
+
+      <!-- RisecreamBlackF -->
+      <div class="product-card">
+        <img src="{{ url_for('static', path='/images/products/flats/RisecreamBlackF.jpg') }}"
+             class="product-img"
+             alt="RisecreamBlackF"
+             data-bs-toggle="modal"
+             data-bs-target="#imageModal"
+             onclick="showImage('{{ url_for('static', path='/images/products/flats/RisecreamBlackF.jpg') }}','RisecreamBlackF')">
+        <div class="product-price">₹320</div>
+        <div class="delivery-info">(Delivery ₹20/km)</div>
+        <div class="button-container">
+          <button class="btn-add-cart" onclick="addToCart('RisecreamBlackF', 320)">Add to Cart</button>
+          <button class="btn-quantity" onclick="addToCart('RisecreamBlackF', 320, 1)">+1</button>
+          <button class="btn-quantity" onclick="addToCart('RisecreamBlackF', 320, 2)">+2</button>
+        </div>
+      </div>
+
     </div>
-  </div>
 
-  <!-- RisecreamF -->
-  <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/flats/RisecreamF.jpg') }}"
-         class="product-img img-thumbnail"
-         alt="RisecreamF"
-         style="cursor:pointer"
-         data-bs-toggle="modal" data-bs-target="#imageModal"
-         onclick="showImage('{{ url_for('static', path='/images/products/flats/RisecreamF.jpg') }}','RisecreamF')">
-    <p class="text-dark fw-bold">₹320 <small class="text-muted">(Delivery ₹20/km)</small></p>
-    <div class="d-flex justify-content-center flex-wrap">
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamF', 320)">Add to Cart</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamF', 320, 1)">+1</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamF', 320, 2)">+2</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamF', 320, 3)">+3</button>
-    </div>
   </div>
-
-  <!-- kalwaniblackF -->
-  <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/flats/kalwaniblackF.jpg') }}"
-         class="product-img img-thumbnail"
-         alt="kalwaniblackF"
-         style="cursor:pointer"
-         data-bs-toggle="modal" data-bs-target="#imageModal"
-         onclick="showImage('{{ url_for('static', path='/images/products/flats/kalwaniblackF.jpg') }}','kalwaniblackF')">
-    <p class="text-dark fw-bold">₹320 <small class="text-muted">(Delivery ₹20/km)</small></p>
-    <div class="d-flex justify-content-center flex-wrap">
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kalwaniblackF', 320)">Add to Cart</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kalwaniblackF', 320, 1)">+1</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kalwaniblackF', 320, 2)">+2</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('kalwaniblackF', 320, 3)">+3</button>
-    </div>
-  </div>
-
-  <!-- RisecreamBlackF -->
-  <div class="col-md-3 text-center mb-4">
-    <img src="{{ url_for('static', path='/images/products/flats/RisecreamBlackF.jpg') }}"
-         class="product-img img-thumbnail"
-         alt="RisecreamBlackF"
-         style="cursor:pointer"
-         data-bs-toggle="modal" data-bs-target="#imageModal"
-         onclick="showImage('{{ url_for('static', path='/images/products/flats/RisecreamBlackF.jpg') }}','RisecreamBlackF')">
-    <p class="text-dark fw-bold">₹320 <small class="text-muted">(Delivery ₹20/km)</small></p>
-    <div class="d-flex justify-content-center flex-wrap">
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamBlackF', 320)">Add to Cart</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamBlackF', 320, 1)">+1</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamBlackF', 320, 2)">+2</button>
-      <button class="btn btn-dark btn-sm me-1" onclick="addToCart('RisecreamBlackF', 320, 3)">+3</button>
-    </div>
-  </div>
-
 </div>
 
-
+<!-- ✅ Image Preview Modal -->
 <div class="modal fade" id="imageModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="imageModalLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body text-center">
-        <img id="modalImage" src="" alt="" class="img-fluid modal-product-img">
+        <img id="modalImage" src="" alt="" class="modal-product-img">
       </div>
     </div>
   </div>
 </div>
-
-<style>
-  .modal-product-img {
-    max-height: 80vh;
-    width: auto;
-    margin: 0 auto;
-    border-radius: 8px;
-  }
-</style>
 
 <!-- ✅ Link to shared cart.js -->
 <script src="{{ url_for('static', path='/js/cart.js') }}"></script>
@@ -108,4 +347,5 @@
     document.getElementById('imageModalLabel').innerText = title;
   }
 </script>
+
 {% endblock %}
