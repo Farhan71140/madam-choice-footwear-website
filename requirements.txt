@@ -1,8 +1,9 @@
 fastapi
-uvicorn
+uvicorn[standard]
 sqlmodel
 passlib[bcrypt]
 python-dotenv
 jinja2
 python-multipart
 psycopg2-binary
+sqlalchemy
