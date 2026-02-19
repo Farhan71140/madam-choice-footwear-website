@@ -37,7 +37,7 @@ templates = Jinja2Templates(directory="templates")
 # ----------------------------
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://postgres:Farhan002@12@db.orsswaxevumwdzqkeopc.supabase.co:5432/postgres"
+    "postgresql://postgres:Farhan9133028638002@db.orsswaxevumwdzqkeopc.supabase.co:5432/postgres"
 )
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
