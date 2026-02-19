@@ -149,6 +149,26 @@ footer a:hover { text-decoration: underline; }
    ============================================= */
 @media (max-width: 768px) {
 
+  /* ── Navbar fix ── */
+  .navbar-brand {
+    font-size: 0.85rem;
+    max-width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .navbar-brand img {
+    width: 35px !important;
+    height: 35px !important;
+    object-fit: contain;
+  }
+  .navbar-nav { padding: 10px 0; }
+  .navbar-nav .nav-item { padding: 2px 0; }
+  .navbar-nav .btn {
+    margin: 8px 0 0 0 !important;
+    width: 100%;
+  }
+
   /* Hero */
   .hero-gradient {
     height: auto;
@@ -237,7 +257,7 @@ footer a:hover { text-decoration: underline; }
     padding: 25px 15px;
   }
 
-  /* Footer buttons wrap nicely */
+  /* Footer */
   footer .btn {
     display: inline-block;
     margin: 4px 2px !important;
@@ -246,14 +266,6 @@ footer a:hover { text-decoration: underline; }
   }
   footer p { font-size: 0.8rem; }
   footer { text-align: center; }
-
-  /* Navbar — cart button full width in mobile menu */
-  .navbar-nav { padding: 10px 0; }
-  .navbar-nav .nav-item { padding: 2px 0; }
-  .navbar-nav .btn {
-    margin: 8px 0 0 0 !important;
-    width: 100%;
-  }
 
   /* Review form */
   .review-form {
