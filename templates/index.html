@@ -96,14 +96,8 @@
   }
 
   @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .badge-modern {
@@ -124,7 +118,7 @@
     50% { transform: scale(1.05); }
   }
 
-  /* ===== BUTTON STYLES - DARK BLUE ===== */
+  /* ===== BUTTON STYLES ===== */
   .btn-action-modern {
     background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
     border: none;
@@ -148,17 +142,13 @@
   .btn-action-modern::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
     transition: left 0.5s ease;
   }
 
-  .btn-action-modern:hover::before {
-    left: 100%;
-  }
+  .btn-action-modern:hover::before { left: 100%; }
 
   .btn-action-modern:hover {
     transform: translateY(-3px) scale(1.05);
@@ -172,10 +162,7 @@
     margin-top: 3rem;
     animation: fadeInUp 1s ease-out 0.6s backwards;
   }
-
-  .social-section h4 {
-    color: #1a1a1a;
-  }
+  .social-section h4 { color: #1a1a1a; }
 
   .social-link {
     display: inline-block;
@@ -187,7 +174,6 @@
     transition: all 0.3s ease;
     border: 2px solid rgba(255,255,255,0.3);
   }
-
   .social-link:hover {
     transform: scale(1.1) rotate(5deg);
     background: rgba(255,255,255,0.3);
@@ -199,11 +185,7 @@
     background: #00c6ff;
     position: relative;
   }
-
-  .section-white {
-    background: #00c6ff;
-    position: relative;
-  }
+  .section-white { background: #00c6ff; position: relative; }
 
   .section-title {
     font-size: 2.5rem;
@@ -235,13 +217,10 @@
     position: relative;
     z-index: 1;
   }
-
   .card-modern:hover {
     transform: translateY(-10px);
     box-shadow: var(--hover-shadow);
-    border-image: linear-gradient(135deg, #00c6ff, #0072ff, #00c6ff, #0072ff) 1;
   }
-
   .card-icon {
     font-size: 3rem;
     margin-bottom: 1.5rem;
@@ -250,18 +229,8 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
-  .card-modern h4 {
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #000;
-  }
-
-  .card-modern p {
-    color: #000;
-    line-height: 1.8;
-    margin: 0;
-  }
+  .card-modern h4 { font-weight: 700; margin-bottom: 1rem; color: #000; }
+  .card-modern p { color: #000; line-height: 1.8; margin: 0; }
 
   /* ===== INFO BOXES ===== */
   .info-box {
@@ -273,18 +242,8 @@
     position: relative;
     z-index: 1;
   }
-
-  .info-box h5 {
-    font-weight: 700;
-    color: #000;
-    margin-bottom: 10px;
-  }
-
-  .info-box p {
-    margin: 0;
-    color: #000;
-    line-height: 1.8;
-  }
+  .info-box h5 { font-weight: 700; color: #000; margin-bottom: 10px; }
+  .info-box p { margin: 0; color: #000; line-height: 1.8; }
 
   /* ===== REVIEW FORM ===== */
   .review-form {
@@ -305,7 +264,6 @@
     font-size: 1rem;
     transition: all 0.3s ease;
   }
-
   .form-control-modern:focus {
     border-color: #0072ff;
     box-shadow: 0 0 0 3px rgba(0, 114, 255, 0.2);
@@ -319,14 +277,8 @@
     font-size: 1.1rem;
   }
 
-  .form-check-inline {
-    margin-right: 15px;
-  }
-
-  .form-check-label {
-    cursor: pointer;
-    font-size: 1.2rem;
-  }
+  .form-check-inline { margin-right: 15px; }
+  .form-check-label { cursor: pointer; font-size: 1.2rem; }
 
   .btn-submit {
     background: var(--dark-blue-gradient);
@@ -340,7 +292,6 @@
     transition: all 0.3s ease;
     box-shadow: 0 5px 20px rgba(0, 64, 128, 0.4);
   }
-
   .btn-submit:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 30px rgba(0, 64, 128, 0.6);
@@ -364,88 +315,111 @@
     transition: all 0.3s ease;
     border: 3px solid transparent;
   }
+  .feature-item:nth-child(1) { border-color: #00c6ff; }
+  .feature-item:nth-child(2) { border-color: #0072ff; }
+  .feature-item:nth-child(3) { border-color: #00c6ff; }
+  .feature-item:nth-child(4) { border-color: #0072ff; }
+  .feature-item:hover { transform: translateY(-5px) scale(1.02); box-shadow: var(--card-shadow); }
 
-  .feature-item:nth-child(1) {
-    border-color: #00c6ff;
-  }
-
-  .feature-item:nth-child(2) {
-    border-color: #0072ff;
-  }
-
-  .feature-item:nth-child(3) {
-    border-color: #00c6ff;
-  }
-
-  .feature-item:nth-child(4) {
-    border-color: #0072ff;
-  }
-
-  .feature-item:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: var(--card-shadow);
-  }
-
-  .feature-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-
-  .feature-item h5 {
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #000;
-  }
-
-  .feature-item p {
-    color: #000;
-    margin: 0;
-  }
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 768px) {
-    .hero-title {
-      font-size: 2.5rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.2rem;
-    }
-
-    .btn-action-modern {
-      padding: 12px 25px;
-      font-size: 1rem;
-      margin: 8px;
-    }
-
-    .section-title {
-      font-size: 2rem;
-    }
-
-    .card-modern {
-      padding: 25px;
-    }
-  }
+  .feature-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .feature-item h5 { font-weight: 700; margin-bottom: 10px; color: #000; }
+  .feature-item p { color: #000; margin: 0; }
 
   /* ===== DECORATIVE ELEMENTS ===== */
   .wave-divider {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
+    bottom: 0; left: 0;
+    width: 100%; overflow: hidden; line-height: 0;
   }
-
   .wave-divider svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 60px;
+    position: relative; display: block;
+    width: calc(100% + 1.3px); height: 60px;
+  }
+  .wave-divider .shape-fill { fill: #ffffff; }
+
+  /* ===== MOBILE RESPONSIVE ===== */
+  @media (max-width: 768px) {
+
+    /* Hero */
+    .hero-modern {
+      min-height: auto;
+      padding: 70px 0 40px;
+    }
+
+    .hero-content-modern {
+      padding: 0 15px;
+    }
+
+    .hero-title { font-size: 1.7rem; }
+    .hero-subtitle { font-size: 1rem; }
+    .hero-details { font-size: 0.85rem; }
+
+    .badge-modern {
+      font-size: 0.8rem;
+      padding: 5px 12px;
+      margin: 3px;
+    }
+
+    /* Stack buttons vertically on mobile */
+    .mt-4 {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .btn-action-modern {
+      display: flex !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 12px 20px !important;
+      font-size: 0.95rem !important;
+      justify-content: center;
+      border-radius: 12px !important;
+    }
+
+    /* Social */
+    .social-section { margin-top: 1.5rem; }
+
+    /* Sections */
+    .section-modern { padding: 35px 0; }
+    .section-title { font-size: 1.5rem; }
+    .section-subtitle { font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+    /* Features — 2 columns on mobile */
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+    .feature-item {
+      padding: 15px 10px;
+    }
+    .feature-item:hover { transform: none; }
+    .feature-icon { font-size: 2rem; }
+    .feature-item h5 { font-size: 0.85rem; }
+    .feature-item p { font-size: 0.78rem; }
+
+    /* Cards */
+    .card-modern { padding: 20px 15px; }
+    .card-modern:hover { transform: none; }
+
+    /* Info box */
+    .info-box { padding: 15px; }
+
+    /* Review form */
+    .review-form { padding: 20px 15px; }
+    .btn-submit { width: 100%; padding: 12px; }
+
+    /* Star ratings wrap */
+    .form-check-inline { margin-right: 8px; }
+    .form-check-label { font-size: 1rem; }
   }
 
-  .wave-divider .shape-fill {
-    fill: #ffffff;
+  @media (max-width: 400px) {
+    .hero-title { font-size: 1.4rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .badge-modern { font-size: 0.75rem; }
   }
 </style>
 
@@ -457,7 +431,7 @@
       <p class="hero-subtitle">Your Trusted Destination for Elegant Ladies Footwear</p>
       
       <div class="hero-details">
-        <span class="badge-modern">👞 Fancy Footwear </span>
+        <span class="badge-modern">👞 Fancy Footwear</span>
         <span class="badge-modern">⭐ Since 2005</span>
         <span class="badge-modern">🚚 Fast Delivery</span>
       </div>
@@ -515,19 +489,16 @@
         <h5>Trendy Designs</h5>
         <p>Latest fashion-forward styles that complement every outfit</p>
       </div>
-
       <div class="feature-item">
         <div class="feature-icon">💎</div>
         <h5>Premium Quality</h5>
         <p>Carefully curated footwear that ensures comfort and durability</p>
       </div>
-
       <div class="feature-item">
         <div class="feature-icon">💰</div>
         <h5>Best Prices</h5>
         <p>Affordable luxury without compromising on quality</p>
       </div>
-
       <div class="feature-item">
         <div class="feature-icon">🤝</div>
         <h5>Trusted Since 2005</h5>
@@ -579,7 +550,6 @@
 
 <!-- ===== SCRIPTS ===== -->
 <script>
-// ✅ Payment Confirmation Script
 function confirmPayment(productName, price) {
   const paid = confirm(`Have you paid ₹${price} for ${productName}?`);
   if (paid) {
@@ -591,35 +561,21 @@ function confirmPayment(productName, price) {
   }
 }
 
-// ✅ Review Form Submission
 document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
   e.preventDefault();
-  
   const reviewText = document.getElementById('reviewText').value;
   const rating = document.querySelector('input[name="rating"]:checked')?.value;
-  
   if (reviewText && rating) {
     const stars = '⭐'.repeat(rating);
     const message = `New Customer Review for Madam Choice Footwear\n\nRating: ${stars} (${rating}/5)\n\nReview: ${reviewText}\n\nThank you for your feedback!`;
     const encoded = encodeURIComponent(message);
-    
-    // Send to WhatsApp
     window.open(`https://wa.me/919133028638?text=${encoded}`, '_blank');
-    
-    // Show success message
     alert('Thank you for your review! We appreciate your feedback. 🌟');
-    
-    // Reset form
     this.reset();
   }
 });
 
-// Add animation on scroll
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
-
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
