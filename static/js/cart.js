@@ -2,10 +2,6 @@
 // MADAM CHOICE FOOTWEAR — cart.js
 // ============================================================
 
-// ─────────────────────────────────────────
-// 🛒 CART HELPERS
-// ─────────────────────────────────────────
-
 function getCart() {
   return JSON.parse(localStorage.getItem('cart')) || [];
 }
@@ -17,7 +13,6 @@ function saveCart(cart) {
 // ─────────────────────────────────────────
 // ➕ ADD TO CART
 // ─────────────────────────────────────────
-
 function addToCart(productName, price, quantity = 1) {
   let cart = getCart();
 
@@ -29,87 +24,79 @@ function addToCart(productName, price, quantity = 1) {
   }
 
   saveCart(cart);
-  updateCart();
-
-  // ✅ Toast instead of alert()
+  updateCartBadge(); // ✅ update badge immediately
   showCartToast(`✅ "${productName}" ×${quantity} added to cart!`);
 }
 
 // ─────────────────────────────────────────
 // ❌ REMOVE FROM CART
 // ─────────────────────────────────────────
-
 function removeFromCart(index) {
   let cart = getCart();
   cart.splice(index, 1);
   saveCart(cart);
-  updateCart();
+  updateCartBadge();
 }
 
 // ─────────────────────────────────────────
-// 🔄 UPDATE CART DISPLAY
-// Updates navbar badge + any cart list on page
+// 🔢 UPDATE CART BADGE
+// Updates BOTH desktop and mobile badges
 // ─────────────────────────────────────────
+function updateCartBadge() {
+  const cart  = getCart();
+  const count = cart.reduce((sum, i) => sum + i.quantity, 0);
+  const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
-function updateCart() {
-  const cart = getCart();
+  // Desktop badge
+  const badge = document.getElementById('cartCount');
+  if (badge) {
+    badge.innerText = count;
+    badge.style.display = count > 0 ? 'inline-block' : 'none';
+  }
 
-  // Elements that may or may not exist on the current page
+  // ✅ Mobile badge
+  const mobileBadge = document.getElementById('cartCountMobile');
+  if (mobileBadge) {
+    mobileBadge.innerText = count;
+    mobileBadge.style.display = count > 0 ? 'inline-block' : 'none';
+  }
+
+  // Save total so pay.html can read it
+  localStorage.setItem('cartTotal', total.toFixed(2));
+
+  // Also update cartItems list if it exists on the page (cart.html)
   const cartItems  = document.getElementById('cartItems');
   const cartTotal  = document.getElementById('cartTotal');
   const checkoutBtn = document.getElementById('checkoutBtn');
-  const cartCount  = document.getElementById('cartCount');
-  const cartBadge  = document.getElementById('cartBadge');
 
-  let total = 0;
-  if (cartItems) cartItems.innerHTML = '';
-
-  cart.forEach((item, index) => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
-
-    const line = `
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span>${item.name} × ${item.quantity} – ₹${itemTotal.toFixed(2)}</span>
-        <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">✕ Remove</button>
-      </li>`;
-
-    if (cartItems) cartItems.innerHTML += line;
-  });
-
-  if (cartTotal)   cartTotal.innerText  = total.toFixed(2);
-  if (checkoutBtn) checkoutBtn.disabled = cart.length === 0;
-
-  // Update badge count (supports both id names)
-  const count = cart.reduce((sum, i) => sum + i.quantity, 0);
-  if (cartCount) cartCount.innerText = count;
-  if (cartBadge) {
-    cartBadge.innerText = count;
-    cartBadge.style.display = count > 0 ? 'inline-block' : 'none';
+  if (cartItems) {
+    cartItems.innerHTML = '';
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      cartItems.innerHTML += `
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>${item.name} × ${item.quantity} – ₹${itemTotal.toFixed(2)}</span>
+          <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">✕</button>
+        </li>`;
+    });
   }
 
-  // Save total to localStorage so pay.html can read it
-  localStorage.setItem('cartTotal', total.toFixed(2));
+  if (cartTotal)    cartTotal.innerText   = total.toFixed(2);
+  if (checkoutBtn)  checkoutBtn.disabled  = cart.length === 0;
 }
 
 // ─────────────────────────────────────────
-// 💳 CHECKOUT → go to /pay
-// ✅ FIXED: No longer opens old Bootstrap payment modal
+// 💳 CHECKOUT
 // ─────────────────────────────────────────
-
 function checkoutCart() {
   const cart = getCart();
-
   if (cart.length === 0) {
     showCartToast('Your cart is empty! Add items first.', 'error');
     return;
   }
-
-  // Redirect to the proper payment page
   window.location.href = '/pay';
 }
 
-// Alias so both function names work
 function startPayment() {
   checkoutCart();
 }
@@ -117,18 +104,16 @@ function startPayment() {
 // ─────────────────────────────────────────
 // 🗑️ CLEAR CART
 // ─────────────────────────────────────────
-
 function clearCart() {
   localStorage.removeItem('cart');
   localStorage.removeItem('cartTotal');
-  updateCart();
+  updateCartBadge();
   showCartToast('Cart cleared.', 'error');
 }
 
 // ─────────────────────────────────────────
-// 🍞 TOAST — replaces all alert() calls
+// 🍞 TOAST
 // ─────────────────────────────────────────
-
 function showCartToast(message, type = 'success') {
   const existing = document.getElementById('cartToast');
   if (existing) existing.remove();
@@ -171,7 +156,6 @@ function showCartToast(message, type = 'success') {
 }
 
 // ─────────────────────────────────────────
-// 🚀 INIT
+// 🚀 INIT — runs on every page load
 // ─────────────────────────────────────────
-
-document.addEventListener('DOMContentLoaded', updateCart);
+document.addEventListener('DOMContentLoaded', updateCartBadge);

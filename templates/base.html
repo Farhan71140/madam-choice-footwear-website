@@ -10,30 +10,41 @@
 </head>
 <body>
 
-  <!-- ✅ Navbar -->
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
+
       <a class="navbar-brand fw-bold" href="/">
-        <img src="{{ url_for('static', path='/images/logo.png') }}" alt="Madam Choice Logo" height="40">
+        <img src="{{ url_for('static', path='/images/logo.png') }}" alt="Madam Choice Logo"
+             style="width:35px; height:35px; object-fit:contain; margin-right:8px;">
         Madam Choice Footwear
       </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <!-- Mobile: cart + hamburger -->
+      <div class="d-flex d-lg-none align-items-center ms-auto gap-1">
+        <button class="btn btn-outline-light position-relative"
+                data-bs-toggle="modal" data-bs-target="#cartModal"
+                style="font-size:1.1rem; padding:6px 12px;">
+          🛒
+          <span id="cartCountMobile"
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style="display:none; font-size:0.65rem;">0</span>
+        </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
 
+      <!-- Desktop nav links -->
       <div id="nav" class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link {% if request.url.path == '/' %}active{% endif %}" href="/">Home</a></li>
           <li class="nav-item"><a class="nav-link {% if request.url.path.startswith('/products') %}active{% endif %}" href="/products">Products</a></li>
           <li class="nav-item"><a class="nav-link {% if request.url.path == '/about' %}active{% endif %}" href="/about">About</a></li>
           <li class="nav-item"><a class="nav-link {% if request.url.path == '/contact' %}active{% endif %}" href="/contact">Contact</a></li>
-
-          <!-- Cart button -->
-          <li class="nav-item">
+          <li class="nav-item d-none d-lg-block">
             <button class="btn btn-outline-light position-relative ms-2"
-                    data-bs-toggle="modal" data-bs-target="#cartModal"
-                    onclick="renderCartModal()">
+                    data-bs-toggle="modal" data-bs-target="#cartModal">
               🛒 Cart
               <span id="cartCount"
                     class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
@@ -45,12 +56,11 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
   <main>
     {% block content %}{% endblock %}
   </main>
 
-  <!-- ✅ Footer -->
+  <!-- Footer -->
   <footer class="bg-dark text-light text-center py-4">
     <div class="container">
       <p>
@@ -63,24 +73,20 @@
         <a href="tel:9395550002" class="text-info text-decoration-none">9395550002</a> &nbsp;|&nbsp; ✉️
         <a href="mailto:farhanuddin0516@gmail.com" class="text-info text-decoration-none">farhanuddin0516@gmail.com</a>
       </p>
-
       <div class="mb-3">
         <h6 class="fw-bold">Follow Us On</h6>
         <a href="https://www.instagram.com/madamchoice_footwear?igsh=MXJ1aXEwejgzZWxwOA==" target="_blank" class="mx-2">
           <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="32" height="32">
         </a>
       </div>
-
       <div class="mb-3">
         <a href="https://wa.me/919133028638?text=Order%20not%20delivered.%20Help%20me%20out." class="btn btn-danger btn-sm mx-1">❌ Order Not Delivered</a>
         <a href="https://wa.me/919133028638?text=Can%20you%20help%20me%20out%20to%20know%20where%20is%20my%20order%3F" class="btn btn-warning btn-sm mx-1">📦 Where Is My Order?</a>
         <a href="tel:9133028638" class="btn btn-info btn-sm mx-1">📞 Call Customer Care</a>
         <a href="https://wa.me/919133028638?text=I%20want%20to%20know%20more%20about%20your%20products%20and%20varieties." class="btn btn-success btn-sm mx-1">💬 WhatsApp Support</a>
       </div>
-
       <a href="https://wa.me/919133028638?text=Hello%20Madam%20Choice%20Footwear%2C%20I%20want%20to%20order"
          class="btn btn-success btn-sm mt-2">Order on WhatsApp</a>
-
       <p class="mt-3">
         <small class="text-muted">* Goods once used will not be taken back. Exchange within three days only.</small>
       </p>
@@ -92,48 +98,29 @@
     </div>
   </footer>
 
-  <!-- ============================================================
-       ✅ CART MODAL — reads live from localStorage
-       ✅ OLD PAYMENT MODAL REMOVED — /pay handles payment now
-       ============================================================ -->
+  <!-- ✅ Cart Modal -->
   <div class="modal fade" id="cartModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="border-radius: 16px; overflow: hidden;">
-
         <div class="modal-header" style="background: linear-gradient(135deg, #004080, #0066cc); color: white; border: none;">
           <h5 class="modal-title fw-bold w-100 text-center">🛒 Your Cart</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
-
         <div class="modal-body p-4">
-
-          <!-- Item list — filled by renderCartModal() -->
           <ul id="cartModalItems" class="list-group mb-3"></ul>
-
-          <!-- Empty state -->
           <div id="cartEmptyMsg" class="text-center text-muted py-3" style="display:none;">
             <div style="font-size:2.5rem;">🛍️</div>
             <p class="mt-2">Your cart is empty.<br>Add some products first!</p>
             <a href="/products" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Browse Products →</a>
           </div>
-
-          <!-- Total row -->
-          <div id="cartTotalRow" class="d-flex justify-content-between align-items-center fw-bold fs-5 border-top pt-3 mt-2">
+          <div id="cartTotalRow" class="d-flex justify-content-between align-items-center fw-bold fs-5 border-top pt-3 mt-2" style="display:none !important;">
             <span>Total</span>
             <span>₹<span id="cartModalTotal">0</span></span>
           </div>
-
-          <!-- Action buttons -->
-          <div id="cartActions" class="mt-3 d-flex flex-column gap-2">
-            <!-- ✅ Proceed to Pay → goes to /pay page -->
-            <button class="btn btn-primary fw-bold py-2" onclick="goToPayment()">
-              💳 Proceed to Pay
-            </button>
-            <button class="btn btn-outline-danger btn-sm" onclick="clearCartFromModal()">
-              🗑️ Clear Cart
-            </button>
+          <div id="cartActions" class="mt-3 d-flex flex-column gap-2" style="display:none !important;">
+            <button class="btn btn-primary fw-bold py-2" onclick="goToPayment()">💳 Proceed to Pay</button>
+            <button class="btn btn-outline-danger btn-sm" onclick="clearCartFromModal()">🗑️ Clear Cart</button>
           </div>
-
         </div>
       </div>
     </div>
@@ -141,22 +128,23 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- cart.js — must load before app.js -->
+  <!-- Cart JS -->
   <script src="{{ url_for('static', path='/js/cart.js') }}"></script>
   <script src="{{ url_for('static', path='/js/app.js') }}"></script>
 
   <script>
-    // ─────────────────────────────────────────
-    // Render cart modal with live localStorage data
-    // ─────────────────────────────────────────
+    // ✅ Use Bootstrap event — fires AFTER modal is shown, guaranteed to work
+    document.getElementById('cartModal').addEventListener('show.bs.modal', function () {
+      renderCartModal();
+    });
+
     function renderCartModal() {
-      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      const itemsList   = document.getElementById('cartModalItems');
-      const emptyMsg    = document.getElementById('cartEmptyMsg');
-      const totalRow    = document.getElementById('cartTotalRow');
-      const cartActions = document.getElementById('cartActions');
-      const totalEl     = document.getElementById('cartModalTotal');
+      const cart       = JSON.parse(localStorage.getItem('cart') || '[]');
+      const itemsList  = document.getElementById('cartModalItems');
+      const emptyMsg   = document.getElementById('cartEmptyMsg');
+      const totalRow   = document.getElementById('cartTotalRow');
+      const cartActions= document.getElementById('cartActions');
+      const totalEl    = document.getElementById('cartModalTotal');
 
       itemsList.innerHTML = '';
       let total = 0;
@@ -165,6 +153,7 @@
         emptyMsg.style.display    = 'block';
         totalRow.style.display    = 'none';
         cartActions.style.display = 'none';
+        totalEl.innerText = '0';
         return;
       }
 
@@ -175,11 +164,11 @@
       cart.forEach((item, index) => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
-
         itemsList.innerHTML += `
           <li class="list-group-item d-flex justify-content-between align-items-center">
             <div>
-              <div class="fw-semibold">${item.name}</div>
+              <div class="fw-semibold" style="cursor:pointer; color:#0066cc;"
+                   onclick="goToProduct('${item.name}')">${item.name}</div>
               <small class="text-muted">₹${item.price.toFixed(2)} × ${item.quantity}</small>
             </div>
             <div class="d-flex align-items-center gap-2">
@@ -193,7 +182,6 @@
       localStorage.setItem('cartTotal', total.toFixed(2));
     }
 
-    // Remove item and re-render modal without closing it
     function removeAndRefresh(index) {
       let cart = JSON.parse(localStorage.getItem('cart') || '[]');
       cart.splice(index, 1);
@@ -202,7 +190,6 @@
       renderCartModal();
     }
 
-    // Clear all and refresh
     function clearCartFromModal() {
       localStorage.removeItem('cart');
       localStorage.removeItem('cartTotal');
@@ -210,26 +197,40 @@
       renderCartModal();
     }
 
-    // ✅ Go to /pay — cart data already in localStorage
     function goToPayment() {
       const cart = JSON.parse(localStorage.getItem('cart') || '[]');
       if (cart.length === 0) return;
-
-      // Close modal first, then redirect
       bootstrap.Modal.getInstance(document.getElementById('cartModal')).hide();
       setTimeout(() => { window.location.href = '/pay'; }, 300);
     }
 
-    // ─────────────────────────────────────────
-    // Update navbar cart badge on every page
-    // ─────────────────────────────────────────
+    function goToProduct(name) {
+      const n = name.split(' ')[0];
+      if      (n.endsWith('H')) window.location.href = '/heels';
+      else if (n.endsWith('F')) window.location.href = '/flats';
+      else if (n.endsWith('W')) window.location.href = '/wedges';
+      else if (n.endsWith('B')) window.location.href = '/bridal';
+      else if (n.endsWith('S')) window.location.href = '/shoes';
+      else if (n.endsWith('C')) window.location.href = '/casualwear';
+      else                      window.location.href = '/products';
+    }
+
+    // ✅ Updates BOTH desktop and mobile badges
     function updateCartBadge() {
       const cart  = JSON.parse(localStorage.getItem('cart') || '[]');
       const count = cart.reduce((sum, i) => sum + i.quantity, 0);
+
       const badge = document.getElementById('cartCount');
-      if (!badge) return;
-      badge.innerText = count;
-      badge.style.display = count > 0 ? 'inline-block' : 'none';
+      if (badge) {
+        badge.innerText = count;
+        badge.style.display = count > 0 ? 'inline-block' : 'none';
+      }
+
+      const mobileBadge = document.getElementById('cartCountMobile');
+      if (mobileBadge) {
+        mobileBadge.innerText = count;
+        mobileBadge.style.display = count > 0 ? 'inline-block' : 'none';
+      }
     }
 
     // Run on every page load
