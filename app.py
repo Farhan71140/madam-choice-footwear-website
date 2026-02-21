@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Form, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 import smtplib
@@ -11,12 +11,12 @@ import os
 
 from passlib.context import CryptContext
 from dotenv import load_dotenv
-load_dotenv()  # ✅ Loads secrets from .env file
+load_dotenv()
 
 # -------------------------------
 # Password hashing setup
 # -------------------------------
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
 
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
@@ -35,16 +35,18 @@ templates = Jinja2Templates(directory="templates")
 # ----------------------------
 # Database setup
 # ----------------------------
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://postgres.orsswaxevumwdzqkeopc:Farhan9133028638002@aws-1-ap-south-1.pooler.supabase.com:6543/postgres"
-)
-    
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///database.db")
+
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 engine = create_engine(DATABASE_URL, echo=False)
 
+# ----------------------------
+# Models
+# ----------------------------
 class Review(SQLModel, table=True):
+    __tablename__ = "review"
     id: int | None = Field(default=None, primary_key=True)
     name: str
     rating: int
@@ -52,20 +54,23 @@ class Review(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class Order(SQLModel, table=True):
+    __tablename__ = "order"
     id: int | None = Field(default=None, primary_key=True)
     order_id: str = Field(default_factory=lambda: str(uuid.uuid4()), index=True, unique=True)
     product_name: str
     expected_amount: int
     customer_name: str
     customer_phone: str
-    customer_address: str = Field(default="")   # ✅ NEW
-    payment_method: str = Field(default="UPI")  # ✅ NEW
-    transaction_id: str = Field(default="")     # ✅ NEW
-    status: str = Field(default="pending")      # pending, paid, failed
+    customer_address: str = Field(default="")
+    payment_method: str = Field(default="UPI")
+    transaction_id: str = Field(default="")
+    status: str = Field(default="pending")
     created_at: datetime = Field(default_factory=datetime.utcnow)
     paid_at: datetime | None = None
 
+# ✅ FIXED: renamed table from "user" to "appuser" — "user" is reserved in PostgreSQL
 class User(SQLModel, table=True):
+    __tablename__ = "appuser"
     id: int | None = Field(default=None, primary_key=True)
     name: str
     email: str = Field(index=True, unique=True)
@@ -125,16 +130,12 @@ def shoes(request: Request):
 async def casualwear(request: Request):
     return templates.TemplateResponse("casualwear.html", {"request": request})
 
-# ----------------------------
-# ✅ Payment page route (NEW)
-# ----------------------------
 @app.get("/pay", response_class=HTMLResponse)
 async def pay_page(request: Request):
     return templates.TemplateResponse("pay.html", {"request": request})
 
 # ----------------------------
-# ✅ Save order to DB after UPI payment (NEW)
-# Called from pay.html JS after user submits verification form
+# Save order
 # ----------------------------
 @app.post("/api/save-order")
 async def save_order(request: Request):
@@ -149,7 +150,7 @@ async def save_order(request: Request):
                 customer_address=data.get("address", ""),
                 payment_method=data.get("paymentMethod", "UPI"),
                 transaction_id=data.get("transactionId", ""),
-                status="pending"  # You manually verify & update to "paid"
+                status="pending"
             )
             session.add(order)
             session.commit()
@@ -160,7 +161,7 @@ async def save_order(request: Request):
         return JSONResponse({"ok": False, "error": str(e)}, status_code=500)
 
 # ----------------------------
-# Contact form (email)
+# Contact form
 # ----------------------------
 @app.post("/contact", response_class=HTMLResponse)
 async def contact_form(
@@ -169,7 +170,6 @@ async def contact_form(
     email: str = Form(...),
     message: str = Form(...)
 ):
-    # ✅ Read from .env — never hardcode passwords
     gmail_user = os.getenv("GMAIL_USER", "farhanuddin0516@gmail.com")
     gmail_app_password = os.getenv("GMAIL_APP_PASSWORD", "")
 
@@ -215,7 +215,7 @@ async def list_reviews():
         return reviews
 
 # ----------------------------
-# Orders (existing form-based route kept for compatibility)
+# Orders
 # ----------------------------
 @app.post("/orders")
 async def create_order(
@@ -245,7 +245,7 @@ async def get_order(order_id: str):
         return order
 
 # ----------------------------
-# Coupon route
+# Coupon
 # ----------------------------
 @app.post("/apply-coupon")
 async def apply_coupon(
@@ -278,14 +278,18 @@ def signup_page(request: Request):
 
 @app.post("/signup", response_class=HTMLResponse)
 def signup(request: Request, name: str = Form(...), email: str = Form(...), password: str = Form(...)):
-    with Session(engine) as session:
-        existing = session.exec(select(User).where(User.email == email)).first()
-        if existing:
-            return templates.TemplateResponse("signup.html", {"request": request, "error": "Email already registered!"})
-        user = User(name=name, email=email, password_hash=hash_password(password))
-        session.add(user)
-        session.commit()
-        return templates.TemplateResponse("signup.html", {"request": request, "success": f"Account created for {name}. You can now log in."})
+    try:
+        with Session(engine) as session:
+            existing = session.exec(select(User).where(User.email == email)).first()
+            if existing:
+                return templates.TemplateResponse("signup.html", {"request": request, "error": "Email already registered!"})
+            user = User(name=name, email=email, password_hash=hash_password(password))
+            session.add(user)
+            session.commit()
+            return templates.TemplateResponse("signup.html", {"request": request, "success": f"Account created for {name}! You can now log in."})
+    except Exception as e:
+        print("Signup error:", e)
+        return templates.TemplateResponse("signup.html", {"request": request, "error": f"Something went wrong: {str(e)}"})
 
 @app.get("/login", response_class=HTMLResponse)
 def login_page(request: Request):
@@ -293,8 +297,13 @@ def login_page(request: Request):
 
 @app.post("/login", response_class=HTMLResponse)
 def login(request: Request, email: str = Form(...), password: str = Form(...)):
-    with Session(engine) as session:
-        user = session.exec(select(User).where(User.email == email)).first()
-        if not user or not verify_password(password, user.password_hash):
-            return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid credentials"})
-        return templates.TemplateResponse("login.html", {"request": request, "success": f"Welcome back, {user.name}!"})
+    try:
+        with Session(engine) as session:
+            user = session.exec(select(User).where(User.email == email)).first()
+            if not user or not verify_password(password, user.password_hash):
+                return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid email or password!"})
+            # ✅ Redirect to homepage after successful login
+            return RedirectResponse(url="/", status_code=303)
+    except Exception as e:
+        print("Login error:", e)
+        return templates.TemplateResponse("login.html", {"request": request, "error": f"Something went wrong: {str(e)}"})
